@@ -5,7 +5,10 @@ use ITBugTracking\Factories\DatabaseConnector;
 use ITBugTracking\Hydrators\IssueHydrator;
 
 $db = DatabaseConnector::connect();
-$completedFilter = $_GET['completed'];
+
+if (isset($_GET['completed'])) {
+    $completedFilter = $_GET['completed'];
+}
 $issues = IssueHydrator::getIssues($db, $completedFilter);
 
 header('Content-Type: application/json; charset=utf-8');
