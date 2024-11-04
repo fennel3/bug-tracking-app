@@ -2,6 +2,8 @@
 
 namespace ITBugTracking;
 
+use PDO;
+
 class DatabaseConnector
 {
     public static function connect()
