@@ -14,6 +14,7 @@ class Issue
 
     public int $department;
 
+    public int $comment_count;
     public int $completed;
 }
 

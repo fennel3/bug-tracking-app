@@ -9,3 +9,4 @@ class Comment
     public string $date_created;
     public int $issue_id;
 }
+
