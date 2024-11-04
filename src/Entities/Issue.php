@@ -16,3 +16,4 @@ class Issue
 
     public int $completed;
 }
+

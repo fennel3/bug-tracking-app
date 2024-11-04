@@ -8,4 +8,8 @@ require('./vendor/autoload.php');
 $db = DatabaseConnector::connect();
 
 
+$test = IssueHydrator::getIssue($db, 4);
 
+
+echo "<pre>";
+var_dump($test);
