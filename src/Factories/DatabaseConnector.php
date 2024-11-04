@@ -1,6 +1,6 @@
 <?php
 
-namespace ITBugTracking;
+namespace ITBugTracking\Factories;
 
 use PDO;
 
