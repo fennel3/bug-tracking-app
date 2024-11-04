@@ -1,6 +1,6 @@
 <?php
 
-use ITBugTracking\DatabaseConnector;
+use ITBugTracking\Factories\DatabaseConnector;
 
 require('./vendor/autoload.php');
 
