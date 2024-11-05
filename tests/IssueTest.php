@@ -4,7 +4,7 @@ namespace tests;
 
 use ITBugTracking\Entities\Issue;
 use PHPUnit\Framework\TestCase;
-
+use TypeError;
 class IssueTest extends TestCase
 {
     public function testJsonSerialize()
@@ -32,5 +32,23 @@ class IssueTest extends TestCase
         $actual = json_encode($issue);
 
         $this->assertEquals($expected, $actual);
+    }
+
+    public function testJsonSerializeMalformedInputs()
+    {
+        $issue = new Issue();
+
+        $this->expectException(TypeError::class);
+
+        $issue->id = "Hello";
+        $issue->title = 1;
+        $issue->description =  2;
+        $issue->severity = 3;
+        $issue->date_created = 4;
+        $issue->comment_count = 5;
+        $issue->completed = "false";
+
+        json_encode($issue);
+
     }
 }

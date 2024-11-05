@@ -7,28 +7,25 @@ use ITBugTracking\Entities\Issue;
 
 class IssueHydrator
 {
-    public static function getIssues(PDO $db, $completedFilter)
+    public static function getIssues(PDO $db, $completedFilter): array|null
     {
-        $queryString = 'SELECT `issues`.`id`, `issues`.`title`, `issues`.`description`, `issues`.`date_created`, `issues`.`reporter`, `issues`.`completed`, `issues`.`department`, `severities`.`name` AS `severity` FROM `issues` LEFT JOIN `severities` ON `issues`.`severity` = `severities`.`id`';
+        $queryString = 'SELECT `issues`.`id`,`issues`.`title`,`issues`.`description`,`issues`.`date_created`,`issues`.`reporter`,`issues`.`department`,`comments`.`issue_id`,COUNT(`comments`.`issue_id`) AS `comment_count`,`issues`.`completed`,`severities`.`name` AS `severity`
+                FROM `issues`
+                LEFT JOIN `severities` ON `issues`.`severity` = `severities`.`id`
+                LEFT JOIN `comments` ON `issues`.`id` = `comments`.`issue_id`';
 
-        if (is_null($completedFilter)) {
-            if ($completedFilter == 0 ) {
-                $queryString .= ' WHERE `issues`.`completed` = 0;';
-            } elseif ($completedFilter == 1) {
-                $queryString .= ' WHERE `issues`.`completed` = 1;';
-            }
-        } else {
-            $queryString .= ';';
+        if (!isset($completedFilter)) {
+            $queryString .= ' WHERE `issues`.`completed` = 0';
         }
+
+        $queryString .= ' GROUP BY
+                `issues`.`id`, `issues`.`title`, `issues`.`description`, `issues`.`date_created`,
+                `issues`.`reporter`, `issues`.`department`, `issues`.`completed`, `severities`.`name`;';
 
         $query = $db->prepare($queryString);
-        $result = $query->execute();
-        if ($result) {
-            $query->setFetchMode(PDO::FETCH_CLASS, Issue::class);
-            return $query->fetchAll();
-        } else {
-            return null;
-        }
+        $query->execute();
+        $query->setFetchMode(PDO::FETCH_CLASS, Issue::class);
+        return $query->fetchAll();
     }
     public static function getIssue($db, $issue_id)
     {
