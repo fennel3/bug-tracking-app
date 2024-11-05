@@ -22,16 +22,9 @@ class IssueHydrator
                 `issues`.`id`, `issues`.`title`, `issues`.`description`, `issues`.`date_created`,
                 `issues`.`reporter`, `issues`.`department`, `issues`.`completed`, `severities`.`name`;';
 
-
         $query = $db->prepare($queryString);
-        $result = $query->execute();
-        if ($result) {
-            $query->setFetchMode(PDO::FETCH_CLASS, Issue::class);
-            return $query->fetchAll();
-        } else {
-            return null;
-        }
-
+        $query->execute();
+        $query->setFetchMode(PDO::FETCH_CLASS, Issue::class);
+        return $query->fetchAll();
     }
-
 }
