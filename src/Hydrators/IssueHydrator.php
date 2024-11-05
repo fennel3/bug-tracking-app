@@ -1,9 +1,10 @@
 <?php
 
-
 namespace ITBugTracking\Hydrators;
 
+
 use PDO;
+use ITBugTracking\Entities\IssueEntity;
 
 class IssueHydrator
 {
@@ -21,7 +22,7 @@ class IssueHydrator
 
         $query = $db->prepare($queryString);
         $query->execute();
-        $query->setFetchMode(PDO::FETCH_CLASS, Issues::class);
+        $query->setFetchMode(PDO::FETCH_CLASS, IssueEntity::class);
         return $query->fetchAll();
     }
 

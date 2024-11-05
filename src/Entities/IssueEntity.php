@@ -2,7 +2,7 @@
 
 namespace ITBugTracking\Entities;
 
-class Issue
+class IssueEntity
 {
     public int $id;
     public string $title;
