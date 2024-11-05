@@ -25,5 +25,3 @@ if (!is_null($issues)) {
         "message" => "Unexpected error"
     ]);
 }
-
-//echo '<pre>';
