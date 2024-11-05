@@ -10,7 +10,7 @@ class IssueHydrator
 {
     public static function getIssues(PDO $db, $completedFilter)
     {
-        $queryString = 'SELECT `issues`.`id`, `issues`.`title`, `issues`.`description`, `issues`.`date_created`, `issues`.`reporter`, `issues`.`completed`, `severities`.`name` AS `severity` FROM `severities` LEFT JOIN `issues` ON `issues`.`severity` = `severities`.`id`';
+        $queryString = 'SELECT `issues`.`id`, `issues`.`title`, `issues`.`description`, `issues`.`date_created`, `issues`.`reporter`, `issues`.`completed`, `issues`.`department`, `severities`.`name` AS `severity` FROM `severities` LEFT JOIN `issues` ON `issues`.`severity` = `severities`.`id`';
 
         if ($completedFilter != null) {
             if ($completedFilter === '0' ) {

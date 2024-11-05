@@ -5,6 +5,7 @@ use ITBugTracking\Factories\DatabaseConnector;
 use ITBugTracking\Hydrators\IssueHydrator;
 
 $db = DatabaseConnector::connect();
+
 $completedFilter = null;
 if (isset($_GET['completed'])) {
     $completedFilter = $_GET['completed'];
