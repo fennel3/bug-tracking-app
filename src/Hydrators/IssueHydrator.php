@@ -3,7 +3,7 @@
 namespace ITBugTracking\Hydrators;
 
 use PDO;
-use ITBugTracking\Entities\IssueEntity;
+use ITBugTracking\Entities\Issue;
 
 class IssueHydrator
 {
@@ -24,7 +24,7 @@ class IssueHydrator
         $query = $db->prepare($queryString);
         $result = $query->execute();
         if ($result) {
-        $query->setFetchMode(PDO::FETCH_CLASS, IssueEntity::class);
+        $query->setFetchMode(PDO::FETCH_CLASS, Issue::class);
         return $query->fetchAll();
         } else {
             return null;

@@ -1,7 +1,7 @@
 <?php
 
 namespace ITBugTracking\Entities;
-class CommentEntity
+class Comment
 {
     public int $id;
     public string $name;
