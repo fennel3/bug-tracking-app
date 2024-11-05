@@ -34,7 +34,7 @@ class IssueTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testJsonSerializeMalformedInputs()
+    public function testIssueJsonSerialize_MalformedInputs()
     {
         $issue = new Issue();
 
