@@ -13,7 +13,7 @@ class IssueTest extends TestCase
 
         $issue->id = 7;
         $issue->title = "A Title";
-        $issue->description = "I'm a summary";
+        $issue->description = "In a world where technology evolves rapidly, it's essential to keep learning and adapting to new skills and information to stay ahead.";
         $issue->severity = "Severe";
         $issue->date_created = "2024-11-05";
         $issue->comment_count = 5;
@@ -22,7 +22,7 @@ class IssueTest extends TestCase
         $expected = json_encode([
             'id' => 7,
             'title' => "A Title",
-            'summary' => "I'm a summary",
+            'summary' => "In a world where technology evolves rapidly, it's essential to keep learning and adapting to new ski",
             'severity' => "Severe",
             'date_created' => "2024-11-05",
             'comment_count' => 5,

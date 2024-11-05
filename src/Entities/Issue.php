@@ -24,7 +24,7 @@ class Issue implements JsonSerializable
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'summary' => $this->description,
+            'summary' => substr($this->description, 0, 100),
             'severity' => $this->severity,
             'date_created' => $this->date_created,
             'comment_count' => $this->comment_count,
