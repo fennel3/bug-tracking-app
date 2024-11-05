@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use TypeError;
 class IssueTest extends TestCase
 {
-    public function testJsonSerialize()
+    public function testIssueJsonSerialize_success()
     {
         $issue = new Issue();
 
@@ -34,7 +34,7 @@ class IssueTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testJsonSerializeMalformedInputs()
+    public function testIssueJsonSerialize_MalformedInputs()
     {
         $issue = new Issue();
 
