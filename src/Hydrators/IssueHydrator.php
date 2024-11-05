@@ -29,10 +29,15 @@ class IssueHydrator
     }
     public static function getIssue($db, $issue_id)
     {
-        $issueQuery = $db->prepare("SELECT * FROM `issues` WHERE `id` = :id");
-        $issueQuery->bindvalue(':id', $issue_id, PDO::PARAM_INT);
-        $issueQuery->execute();
+        $issueQuery = $db->prepare("SELECT `issues`.`id`,`issues`.`title`,`issues`.`description`,`issues`.`date_created`,`issues`.`reporter`,`issues`.`department`,`comments`.`issue_id`,COUNT(`comments`.`issue_id`) AS `comment_count`,`issues`.`completed`,`severities`.`name` AS `severity`
+                FROM `issues` 
+                LEFT JOIN `severities` ON `issues`.`severity` = `severities`.`id`
+                LEFT JOIN `comments` ON `issues`.`id` = `comments`.`issue_id`
+                WHERE `issues`.`id` = :id");
+        $issueQuery->execute([
+            'id' => $issue_id
+        ]);
         $issueQuery->setFetchMode(PDO::FETCH_CLASS, Issue::class);
-        return $issueQuery->fetchall();
+        return $issueQuery->fetch();
     }
 }
