@@ -13,9 +13,36 @@ class IssueTest extends TestCase
 
         $issue->id = 7;
         $issue->title = "A Title";
+        $issue->description = "A summary of an issue";
+        $issue->severity = "Severe";
+        $issue->date_created = "2024-11-05 15:56:55";
+        $issue->comment_count = 5;
+        $issue->completed = false;
+
+        $expected = json_encode([
+            'id' => 7,
+            'title' => "A Title",
+            'summary' => "A summary of an issue",
+            'severity' => "Severe",
+            'date_created' => "2024-11-05 15:56:55",
+            'comment_count' => 5,
+            'completed' => false,
+        ]);
+
+        $actual = json_encode($issue);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testIssueJsonSerialize_longDescriptionSuccess()
+    {
+        $issue = new Issue();
+
+        $issue->id = 7;
+        $issue->title = "A Title";
         $issue->description = "In a world where technology evolves rapidly, it's essential to keep learning and adapting to new skills and information to stay ahead.";
         $issue->severity = "Severe";
-        $issue->date_created = "2024-11-05";
+        $issue->date_created = "2024-11-05 15:56:55";
         $issue->comment_count = 5;
         $issue->completed = false;
 
@@ -24,9 +51,63 @@ class IssueTest extends TestCase
             'title' => "A Title",
             'summary' => "In a world where technology evolves rapidly, it's essential to keep learning and adapting to new ski",
             'severity' => "Severe",
-            'date_created' => "2024-11-05",
+            'date_created' => "2024-11-05 15:56:55",
             'comment_count' => 5,
             'completed' => false,
+        ]);
+
+        $actual = json_encode($issue);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testIssueJsonSerialize_nullableDescriptionSuccess()
+    {
+        $issue = new Issue();
+
+        $issue->id = 7;
+        $issue->title = "A Title";
+        $issue->description = null;
+        $issue->severity = "Severe";
+        $issue->date_created = "2024-11-05 15:56:55";
+        $issue->comment_count = 5;
+        $issue->completed = false;
+
+        $expected = json_encode([
+            'id' => 7,
+            'title' => "A Title",
+            'summary' => null,
+            'severity' => "Severe",
+            'date_created' => "2024-11-05 15:56:55",
+            'comment_count' => 5,
+            'completed' => false,
+        ]);
+
+        $actual = json_encode($issue);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testIssueJsonSerialize_completedTrueSuccess()
+    {
+        $issue = new Issue();
+
+        $issue->id = 7;
+        $issue->title = "A Title";
+        $issue->description = null;
+        $issue->severity = "Severe";
+        $issue->date_created = "2024-11-05 15:56:55";
+        $issue->comment_count = 5;
+        $issue->completed = true;
+
+        $expected = json_encode([
+            'id' => 7,
+            'title' => "A Title",
+            'summary' => null,
+            'severity' => "Severe",
+            'date_created' => "2024-11-05 15:56:55",
+            'comment_count' => 5,
+            'completed' => true,
         ]);
 
         $actual = json_encode($issue);
