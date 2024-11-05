@@ -15,6 +15,5 @@ class IssueHydrator
         $issueQuery->setFetchMode(PDO::FETCH_CLASS, Issue::class);
         return $issueQuery->fetchall();
     }
-
 }
 
