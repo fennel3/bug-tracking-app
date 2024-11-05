@@ -14,7 +14,10 @@ class Issue implements JsonSerializable
     public string $reporter;
     public int $department;
     public int $completed;
-    public int $comment_count;
+
+    public int | null $issue_id;
+
+    public int | null $comment_count;
 
     public function jsonSerialize(): mixed
     {
