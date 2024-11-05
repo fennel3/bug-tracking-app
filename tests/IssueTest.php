@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use TypeError;
 class IssueTest extends TestCase
 {
-    public function testJsonSerialize()
+    public function testIssueJsonSerialize_success()
     {
         $issue = new Issue();
 
