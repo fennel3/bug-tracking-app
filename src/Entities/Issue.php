@@ -11,18 +11,23 @@ class Issue implements JsonSerializable
     public string|null $description;
     public string $severity;
     public string $date_created;
-    public string $reporter;
-    public int $department;
     public int $completed;
     public int|null $issue_id;
     public int|null $comment_count;
 
     public function jsonSerialize(): mixed
     {
+
+        if (!is_null($this->description)) {
+            $summary = substr($this->description, 0, 100);
+        } else {
+            $summary = null;
+        }
+
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'summary' => substr($this->description, 0, 100),
+            'summary' => $summary,
             'severity' => $this->severity,
             'date_created' => $this->date_created,
             'comment_count' => $this->comment_count,
