@@ -11,11 +11,13 @@ class Issue implements JsonSerializable
     public string|null $description;
     public string $severity;
     public string $date_created;
-    public string $reporter;
-    public int $department;
     public int $completed;
-    public int|null $issue_id;
     public int|null $comment_count;
+
+    public function getCompleted($completed): bool
+    {
+        return $completed == 1;
+    }
 
     public function jsonSerialize(): mixed
     {

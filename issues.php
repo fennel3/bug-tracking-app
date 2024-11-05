@@ -9,7 +9,7 @@ header("Access-Control-Allow-Origin: *");
 
 try {
     $db = DatabaseConnector::connect();
-    if (isset($_GET['completed'])) {
+    if (isset($_GET['completed']) && is_int($_GET['completed'])) {
         $completedFilter = $_GET['completed'];
     }
     $issues = IssueHydrator::getIssues($db, $completedFilter);

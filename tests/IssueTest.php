@@ -51,4 +51,9 @@ class IssueTest extends TestCase
         json_encode($issue);
 
     }
+
+    public function test
+
 }
+
+
