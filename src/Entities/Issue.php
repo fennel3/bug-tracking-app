@@ -19,7 +19,7 @@ class Issue implements JsonSerializable
     {
 
         if (!is_null($this->description)) {
-            $summary = substr($this->description, 0, 100) . "...";
+            $summary = substr($this->description, 0, 100);
         } else {
             $summary = null;
         }
