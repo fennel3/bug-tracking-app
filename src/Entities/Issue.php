@@ -16,24 +16,20 @@ class Issue implements JsonSerializable
 
     public int $department;
 
-    public bool $completed;
-    public int $count;
+    public int $completed;
+    public int $comment_count;
 
     public function jsonSerialize(): mixed
     {
-        // TODO: Implement jsonSerialize() method.
-        $output = [
+        return [
             'id' => $this->id,
             'title' => $this->title,
             'summary' => $this->description,
             'severity' => $this->severity,
             'date_created' => $this->date_created,
-            'comment_count' => $this->count,
-            'completed' => $this->completed
+            'comment_count' => $this->comment_count,
+            'completed' => boolval($this->completed)
         ];
-
-        return $output;
     }
-
 }
 

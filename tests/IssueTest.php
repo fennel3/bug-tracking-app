@@ -7,7 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class IssueTest extends TestCase
 {
-
     public function testJsonSerialize()
     {
         $issue = new Issue();
@@ -17,7 +16,7 @@ class IssueTest extends TestCase
         $issue->description = "I'm a summary";
         $issue->severity = "Severe";
         $issue->date_created = "2024-11-05";
-        $issue->count = 5;
+        $issue->comment_count = 5;
         $issue->completed = false;
 
         $expected = json_encode([
@@ -33,6 +32,5 @@ class IssueTest extends TestCase
         $actual = json_encode($issue);
 
         $this->assertEquals($expected, $actual);
-
     }
 }
