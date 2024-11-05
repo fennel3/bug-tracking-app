@@ -2,7 +2,6 @@
 
 namespace ITBugTracking\Hydrators;
 
-
 use PDO;
 use ITBugTracking\Entities\IssueEntity;
 
@@ -10,20 +9,27 @@ class IssueHydrator
 {
     public static function getIssues(PDO $db, $completedFilter)
     {
-        $queryString = 'SELECT `issues`.`id`, `issues`.`title`, `issues`.`description`, `issues`.`date_created`, `issues`.`reporter`, `issues`.`completed`, `issues`.`department`, `severities`.`name` AS `severity` FROM `severities` LEFT JOIN `issues` ON `issues`.`severity` = `severities`.`id`';
+        $queryString = 'SELECT `issues`.`id`, `issues`.`title`, `issues`.`description`, `issues`.`date_created`, `issues`.`reporter`, `issues`.`completed`, `issues`.`department`, `severities`.`name` AS `severity` FROM `issues` LEFT JOIN `severities` ON `issues`.`severity` = `severities`.`id`';
 
-        if ($completedFilter != null) {
-            if ($completedFilter === '0' ) {
-                $queryString .= ' WHERE `completed` = \'0\'';
-            } else {
-                $queryString .= ' WHERE `completed` = \'1\'';
+        if (is_null($completedFilter)) {
+            if ($completedFilter == 0 ) {
+                $queryString .= ' WHERE `issues`.`completed` = 0;';
+            } elseif ($completedFilter == 1) {
+                $queryString .= ' WHERE `issues`.`completed` = 1;';
             }
+        } else {
+            $queryString .= ';';
         }
 
         $query = $db->prepare($queryString);
-        $query->execute();
+        $result = $query->execute();
+        if ($result) {
         $query->setFetchMode(PDO::FETCH_CLASS, IssueEntity::class);
         return $query->fetchAll();
+        } else {
+            return null;
+        }
+
     }
 
 }

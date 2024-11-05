@@ -4,9 +4,9 @@ namespace ITBugTracking\Entities;
 
 class IssueEntity
 {
-    public int $id;
+    public int  $id;
     public string $title;
-    public string $description;
+    public string | null $description;
     public string $date_created;
     public string $reporter;
     public int $completed;
