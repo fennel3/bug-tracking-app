@@ -11,7 +11,10 @@ try {
     $db = DatabaseConnector::connect();
     if (isset($_GET['completed'])) {
         $completedFilter = $_GET['completed'];
+    } else {
+        $completedFilter = null;
     }
+
     $issues = IssueHydrator::getIssues($db, $completedFilter);
 
     echo json_encode(['issues' => $issues]);

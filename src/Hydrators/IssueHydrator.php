@@ -14,7 +14,7 @@ class IssueHydrator
                 LEFT JOIN `severities` ON `issues`.`severity` = `severities`.`id`
                 LEFT JOIN `comments` ON `issues`.`id` = `comments`.`issue_id`';
 
-        if (!isset($completedFilter)) {
+        if (is_null($completedFilter)) {
             $queryString .= ' WHERE `issues`.`completed` = 0';
         }
 
