@@ -7,7 +7,7 @@ use ITBugTracking\Entities\Issue;
 
 class IssueHydrator
 {
-    public static function getIssues(PDO $db, $completedFilter)
+    public static function getIssues(PDO $db, $completedFilter): array|null
     {
         $queryString = 'SELECT `issues`.`id`,`issues`.`title`,`issues`.`description`,`issues`.`date_created`,`issues`.`reporter`,`issues`.`department`,`comments`.`issue_id`,COUNT(`comments`.`issue_id`) AS `comment_count`,`issues`.`completed`,`severities`.`name` AS `severity`
                 FROM `issues`

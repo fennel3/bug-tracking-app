@@ -5,7 +5,6 @@ namespace tests;
 use ITBugTracking\Entities\Issue;
 use PHPUnit\Framework\TestCase;
 use TypeError;
-
 class IssueTest extends TestCase
 {
     public function testJsonSerialize()
