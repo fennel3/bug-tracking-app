@@ -24,12 +24,18 @@ class IssueHydrator
         $query = $db->prepare($queryString);
         $result = $query->execute();
         if ($result) {
-        $query->setFetchMode(PDO::FETCH_CLASS, Issue::class);
-        return $query->fetchAll();
+            $query->setFetchMode(PDO::FETCH_CLASS, Issue::class);
+            return $query->fetchAll();
         } else {
             return null;
         }
-
     }
-
+    public static function getIssue($db, $issue_id)
+    {
+        $issueQuery = $db->prepare("SELECT * FROM `issues` WHERE `id` = :id");
+        $issueQuery->bindvalue(':id', $issue_id, PDO::PARAM_INT);
+        $issueQuery->execute();
+        $issueQuery->setFetchMode(PDO::FETCH_CLASS, Issue::class);
+        return $issueQuery->fetchall();
+    }
 }
