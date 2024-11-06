@@ -32,7 +32,7 @@ class Issue implements JsonSerializable
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'summary' => $this->summary,
+            'summary' => $this->summary ?? "",
             'severity' => $this->severity,
             'date_created' => $this->getDate(),
             'comment_count' => $this->comment_count,
