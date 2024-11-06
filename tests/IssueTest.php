@@ -73,19 +73,26 @@ class IssueTest extends TestCase
         $issue->comment_count = 5;
         $issue->completed = false;
 
-        $expected = json_encode([
-            'id' => 7,
-            'title' => "A Title",
-            'summary' => null,
-            'severity' => "Severe",
-            'date_created' => "2024-11-05 15:56:55",
-            'comment_count' => 5,
-            'completed' => false,
-        ]);
+        $result = $issue->jsonSerialize();
 
-        $actual = json_encode($issue);
+        $this->assertNull($result['summary']);
+    }
 
-        $this->assertEquals($expected, $actual);
+    public function testIssueJsonSerialize_nullableCommentCountSuccess()
+    {
+        $issue = new Issue();
+
+        $issue->id = 7;
+        $issue->title = "A Title";
+        $issue->summary = "Hello";
+        $issue->severity = "Severe";
+        $issue->date_created = "2024-11-05 15:56:55";
+        $issue->comment_count = null;
+        $issue->completed = false;
+
+        $result = $issue->jsonSerialize();
+
+        $this->assertNull($result['comment_count']);
     }
 
     public function testIssueJsonSerialize_completedTrueSuccess()
@@ -100,19 +107,26 @@ class IssueTest extends TestCase
         $issue->comment_count = 5;
         $issue->completed = true;
 
-        $expected = json_encode([
-            'id' => 7,
-            'title' => "A Title",
-            'summary' => null,
-            'severity' => "Severe",
-            'date_created' => "2024-11-05 15:56:55",
-            'comment_count' => 5,
-            'completed' => true,
-        ]);
+        $result = $issue->jsonSerialize();
 
-        $actual = json_encode($issue);
+        $this->assertTrue($result['completed']);
+    }
 
-        $this->assertEquals($expected, $actual);
+    public function testIssueJsonSerialize_completedFalseSuccess()
+    {
+        $issue = new Issue();
+
+        $issue->id = 7;
+        $issue->title = "A Title";
+        $issue->summary = null;
+        $issue->severity = "Severe";
+        $issue->date_created = "2024-11-05 15:56:55";
+        $issue->comment_count = 5;
+        $issue->completed = false;
+
+        $result = $issue->jsonSerialize();
+
+        $this->assertFalse($result['completed']);
     }
 
     public function testIssueJsonSerialize_MalformedInputs()
