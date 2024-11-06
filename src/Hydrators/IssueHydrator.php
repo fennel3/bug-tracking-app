@@ -10,12 +10,12 @@ class IssueHydrator
 {
     public static function getIssues(PDO $db, $completedFilter): array|null
     {
-        $queryString = 'SELECT `issues`.`id`,`issues`.`title`,`issues`.`description`,`issues`.`date_created`,`issues`.`reporter`,`issues`.`department`,`comments`.`issue_id`,COUNT(`comments`.`issue_id`) AS `comment_count`,`issues`.`completed`,`severities`.`name` AS `severity`
+        $queryString = "SELECT `issues`.`id`,`issues`.`title`,LEFT(`issues`.`description`,100) AS 'summary',`issues`.`date_created`,COUNT(`comments`.`issue_id`) AS `comment_count`,`issues`.`completed`,`severities`.`name` AS `severity`
                 FROM `issues`
                 LEFT JOIN `severities` ON `issues`.`severity` = `severities`.`id`
-                LEFT JOIN `comments` ON `issues`.`id` = `comments`.`issue_id`';
+                LEFT JOIN `comments` ON `issues`.`id` = `comments`.`issue_id`";
 
-        if (!isset($completedFilter)) {
+        if (is_null($completedFilter)) {
             $queryString .= ' WHERE `issues`.`completed` = 0';
         }
 
