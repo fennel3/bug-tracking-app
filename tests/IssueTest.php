@@ -13,7 +13,7 @@ class IssueTest extends TestCase
 
         $issue->id = 7;
         $issue->title = "A Title";
-        $issue->description = "A summary of an issue";
+        $issue->summary = "A summary of an issue";
         $issue->severity = "Severe";
         $issue->date_created = "2024-11-05 15:56:55";
         $issue->comment_count = 5;
@@ -67,7 +67,7 @@ class IssueTest extends TestCase
 
         $issue->id = 7;
         $issue->title = "A Title";
-        $issue->description = null;
+        $issue->summary = null;
         $issue->severity = "Severe";
         $issue->date_created = "2024-11-05 15:56:55";
         $issue->comment_count = 5;
@@ -94,7 +94,7 @@ class IssueTest extends TestCase
 
         $issue->id = 7;
         $issue->title = "A Title";
-        $issue->description = null;
+        $issue->summary = null;
         $issue->severity = "Severe";
         $issue->date_created = "2024-11-05 15:56:55";
         $issue->comment_count = 5;
