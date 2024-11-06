@@ -13,7 +13,7 @@ class IssueTest extends TestCase
 
         $issue->id = 7;
         $issue->title = "A Title";
-        $issue->description = "In a world where technology evolves rapidly, it's essential to keep learning and adapting to new skills and information to stay ahead.";
+        $issue->summary = "In a world where technology evolves rapidly, it's essential to keep learning and adapting to new ski";
         $issue->severity = "Severe";
         $issue->date_created = "2024-11-05";
         $issue->comment_count = 5;
@@ -42,7 +42,7 @@ class IssueTest extends TestCase
 
         $issue->id = "Hello";
         $issue->title = 1;
-        $issue->description =  2;
+        $issue->summary =  2;
         $issue->severity = 3;
         $issue->date_created = 4;
         $issue->comment_count = 5;

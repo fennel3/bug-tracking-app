@@ -8,7 +8,7 @@ class Issue implements JsonSerializable
 {
     public int $id;
     public string $title;
-    public string|null $description;
+    public string|null $summary;
     public string $severity;
     public string $date_created;
     public string $reporter;
@@ -22,7 +22,7 @@ class Issue implements JsonSerializable
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'summary' => $this->description,
+            'summary' => $this->summary,
             'severity' => $this->severity,
             'date_created' => $this->date_created,
             'comment_count' => $this->comment_count,
