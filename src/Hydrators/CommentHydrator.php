@@ -15,7 +15,4 @@ class CommentHydrator
         return $commentCountQuery->fetch();
     }
 
-    public static function getComments(PDO $db, $id){
-        $commentsQuery = $db->
-    }
 }
