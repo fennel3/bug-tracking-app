@@ -2,9 +2,7 @@
 
 namespace tests;
 
-use DateMalformedStringException;
-use http\Exception;
-use http\Exception\InvalidArgumentException;
+use Exception;
 use ITBugTracking\Entities\Issue;
 use PHPUnit\Framework\TestCase;
 use TypeError;
@@ -152,7 +150,7 @@ class IssueTest extends TestCase
 
     }
 
-    public function testGetDateSuccess()
+    public function testGetDate_Success()
     {
         $date = "2024-11-05 15:56:55";
 
@@ -163,22 +161,18 @@ class IssueTest extends TestCase
         assertEquals($actual, $expected);
     }
 
-    public function testGetDateMalformedArray()
+    public function testGetDate_MalformedArray()
     {
         $date = [2024, 11, 05, 15, 56, 55];
-
         $this->expectException(TypeError::class);
-
         Issue::getDate($date);
 
     }
 
-public function testGetDateMalformedString () {
-    $date = "i am a date";
-
-//    $this->expectException(DateMalformedStringException::class);
-  $this->expectException(Exception::class);
-
-   echo Issue::getDate($date);
-}
+    public function testGetDate_MalformedString()
+    {
+        $date = "i am a date";
+        $this->expectException(Exception::class);
+        echo Issue::getDate($date);
+    }
 }

@@ -26,5 +26,3 @@ try {
         "message" => "Unexpected error"
     ]);
 }
-
-var_dump(Issue::getDate("today is 12th feb 2024"));
