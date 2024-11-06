@@ -12,8 +12,12 @@ class Issue implements JsonSerializable
     public string $severity;
     public string $date_created;
     public int $completed;
-    public int|null $issue_id;
     public int|null $comment_count;
+
+    public function getCompleted($completed): bool
+    {
+        return $completed == 1;
+    }
 
     public function jsonSerialize(): mixed
     {
