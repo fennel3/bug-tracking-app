@@ -153,11 +153,8 @@ class IssueTest extends TestCase
     public function testGetDate_Success()
     {
         $date = "2024-11-05 15:56:55";
-
         $expected = "05/11/2024";
-
         $actual = Issue::getDate($date);
-
         assertEquals($actual, $expected);
     }
 
@@ -173,6 +170,6 @@ class IssueTest extends TestCase
     {
         $date = "i am a date";
         $this->expectException(Exception::class);
-        echo Issue::getDate($date);
+        Issue::getDate($date);
     }
 }
