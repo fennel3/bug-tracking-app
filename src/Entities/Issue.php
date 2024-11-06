@@ -17,16 +17,43 @@ class Issue implements JsonSerializable
     public int|null $issue_id;
     public int|null $comment_count;
 
+    public string|null $name;
+    public string|null $comment;
+    public string|null $comment_created;
+
     public function jsonSerialize(): mixed
     {
-        return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'summary' => substr($this->description, 0, 100),
-            'severity' => $this->severity,
-            'date_created' => $this->date_created,
-            'comment_count' => $this->comment_count,
-            'completed' => boolval($this->completed)
-        ];
+
+
+
+        if (!isset($_GET['id'])) {
+            return [
+                'id' => $this->id,
+                'title' => $this->title,
+                'summary' => substr($this->description, 0, 100),
+                'severity' => $this->severity,
+                'date_created' => $this->date_created,
+                'comment_count' => $this->comment_count,
+                'completed' => boolval($this->completed)
+            ];
+        } else {
+            $comment_arr = [];
+
+            foreach($this as $row) {
+                var_dump($row);
+            }
+
+            return [
+                'id' => $this->id,
+                'title' => $this->title,
+                'severity' => $this->severity,
+                'date_created' => $this->date_created,
+                'reporter' => $this->reporter,
+                'department' => $this->department,
+                'description' => $this->description,
+                'comments' => $comment_arr
+            ];
+        }
+
     }
 }
