@@ -56,14 +56,7 @@ class IssueHydrator
 
         $issue->comment_count = count($comments);
 
-        $returnedComments = [];
-
-
-        foreach($comments as $comment) {
-            $returnedComments[] = ['name' => $comment->name, 'comment' => $comment->comment, 'date_created' => DateFormatter::getDate($comment->comment_created)];
-        }
-
-        $issue->comments = $returnedComments;
+        $issue->comments = $comments;
 
         return $issue;
 
