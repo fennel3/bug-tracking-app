@@ -2,9 +2,14 @@
 
 namespace tests;
 
+use DateMalformedStringException;
+use http\Exception;
+use http\Exception\InvalidArgumentException;
 use ITBugTracking\Entities\Issue;
 use PHPUnit\Framework\TestCase;
 use TypeError;
+use function PHPUnit\Framework\assertEquals;
+
 class IssueTest extends TestCase
 {
     public function testIssueJsonSerialize_success()
@@ -24,7 +29,7 @@ class IssueTest extends TestCase
             'title' => "A Title",
             'summary' => "A summary of an issue",
             'severity' => "Severe",
-            'date_created' => "2024-11-05 15:56:55",
+            'date_created' => "05/11/2024",
             'comment_count' => 5,
             'completed' => false,
         ]);
@@ -51,7 +56,7 @@ class IssueTest extends TestCase
             'title' => "A Title",
             'summary' => "In a world where technology evolves rapidly, it's essential to keep learning and adapting to new ski",
             'severity' => "Severe",
-            'date_created' => "2024-11-05 15:56:55",
+            'date_created' => "05/11/2024",
             'comment_count' => 5,
             'completed' => false,
         ]);
@@ -137,7 +142,7 @@ class IssueTest extends TestCase
 
         $issue->id = "Hello";
         $issue->title = 1;
-        $issue->summary =  2;
+        $issue->summary = 2;
         $issue->severity = 3;
         $issue->date_created = 4;
         $issue->comment_count = 5;
@@ -146,4 +151,34 @@ class IssueTest extends TestCase
         json_encode($issue);
 
     }
+
+    public function testGetDateSuccess()
+    {
+        $date = "2024-11-05 15:56:55";
+
+        $expected = "05/11/2024";
+
+        $actual = Issue::getDate($date);
+
+        assertEquals($actual, $expected);
+    }
+
+    public function testGetDateMalformedArray()
+    {
+        $date = [2024, 11, 05, 15, 56, 55];
+
+        $this->expectException(TypeError::class);
+
+        Issue::getDate($date);
+
+    }
+
+public function testGetDateMalformedString () {
+    $date = "i am a date";
+
+//    $this->expectException(DateMalformedStringException::class);
+  $this->expectException(Exception::class);
+
+   echo Issue::getDate($date);
+}
 }

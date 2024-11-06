@@ -19,11 +19,10 @@ class Issue implements JsonSerializable
         return $completed == 1;
     }
 
-    public static function getDate($date_created)
+    public static function getDate($date_created): string
     {
         $date = new \DateTime($date_created);
-        $justDate = $date->format("d/m/Y");
-        return $justDate;
+        return $date->format("d/m/Y");
 
     }
 

@@ -27,4 +27,4 @@ try {
     ]);
 }
 
-Issue::getDate("2024-02-27 14:09:41");
+var_dump(Issue::getDate("today is 12th feb 2024"));
