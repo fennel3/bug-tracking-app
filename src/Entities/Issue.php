@@ -19,8 +19,17 @@ class Issue implements JsonSerializable
         return $completed == 1;
     }
 
+    public static function getDate($date_created)
+    {
+        $date = new \DateTime($date_created);
+        $justDate = $date->format("d/m/Y");
+        return $justDate;
+
+    }
+
     public function jsonSerialize(): mixed
     {
+
 
         if (!is_null($this->description)) {
             $summary = substr($this->description, 0, 100);
@@ -33,7 +42,7 @@ class Issue implements JsonSerializable
             'title' => $this->title,
             'summary' => $summary,
             'severity' => $this->severity,
-            'date_created' => $this->date_created,
+            'date_created' => self::getDate($this->date_created),
             'comment_count' => $this->comment_count,
             'completed' => boolval($this->completed)
         ];

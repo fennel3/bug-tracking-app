@@ -1,6 +1,7 @@
 <?php
 require('./vendor/autoload.php');
 
+use ITBugTracking\Entities\Issue;
 use ITBugTracking\Factories\DatabaseConnector;
 use ITBugTracking\Hydrators\IssueHydrator;
 
@@ -25,3 +26,5 @@ try {
         "message" => "Unexpected error"
     ]);
 }
+
+Issue::getDate("2024-02-27 14:09:41");
