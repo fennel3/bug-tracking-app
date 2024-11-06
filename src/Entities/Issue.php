@@ -13,12 +13,8 @@ class Issue implements JsonSerializable
     public string|null $summary;
     public string $severity;
     public string $date_created;
-    public string $reporter;
-    public int $department;
     public int $completed;
-    public int|null $issue_id;
     public int|null $comment_count;
-    public array|null $comments;
 
     public function getCompleted($completed): bool
     {
@@ -27,7 +23,6 @@ class Issue implements JsonSerializable
 
     public function jsonSerialize(): mixed
     {
-        if (!isset($_GET['id'])) {
             return [
                 'id' => $this->id,
                 'title' => $this->title,
@@ -37,19 +32,5 @@ class Issue implements JsonSerializable
                 'comment_count' => $this->comment_count,
                 'completed' => boolval($this->completed)
             ];
-        } else {
-            return [
-                'id' => $this->id,
-                'title' => $this->title,
-                'severity' => $this->severity,
-                'date_created' => DateFormatter::getDate($this->date_created),
-                'comment_count' => $this->comment_count,
-                'reporter' => $this->reporter,
-                'department' => $this->department,
-                'description' => $this->summary,
-                'comments' => $this->comments
-            ];
-        }
-
     }
 }

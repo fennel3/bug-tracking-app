@@ -16,6 +16,12 @@ try {
     }
     $issue = IssueHydrator::getIssue($db, $issueID);
 
+    if (is_null($issue)) {
+        http_response_code(400);
+        echo json_encode(["message" => "Unknown issue id"]);
+        return;
+    }
+
     echo json_encode($issue);
 
 } catch (Exception $e) {
