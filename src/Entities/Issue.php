@@ -12,16 +12,16 @@ class Issue implements JsonSerializable
     public string $severity;
     public string $date_created;
     public int $completed;
-    public int|null $comment_count;
+    public int $comment_count;
 
-    public function getCompleted($completed): bool
+    public function getCompleted(): bool
     {
-        return $completed == 1;
+        return $this->completed == 1;
     }
 
-    public static function getDate($date_created): string
+    public function getDate(): string
     {
-        $date = new \DateTime($date_created);
+        $date = new \DateTime($this->date_created);
         return $date->format("d/m/Y");
 
     }
@@ -34,9 +34,9 @@ class Issue implements JsonSerializable
             'title' => $this->title,
             'summary' => $this->summary,
             'severity' => $this->severity,
-            'date_created' => self::getDate($this->date_created),
+            'date_created' => $this->getDate(),
             'comment_count' => $this->comment_count,
-            'completed' => boolval($this->completed)
+            'completed' => $this->getCompleted()
         ];
     }
 }
