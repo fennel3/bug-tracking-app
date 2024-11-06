@@ -31,7 +31,7 @@ class IssueHydrator
     }
     public static function getIssue($db, $issue_id)
     {
-        $issueQuery = $db->prepare("SELECT `issues`.`id`,`issues`.`title`,`issues`.`description` AS 'summary',`issues`.`date_created`,`issues`.`reporter`,`issues`.`department`,`comments`.`issue_id`, `issues`.`completed`,`severities`.`name` AS `severity`
+        $issueQuery = $db->prepare("SELECT `issues`.`id`,`issues`.`title`,`issues`.`description` AS 'summary',`issues`.`date_created`, COUNT(`comments`.`issue_id`) AS `comment_count`, `issues`.`reporter`,`issues`.`department`,`comments`.`issue_id`, `issues`.`completed`,`severities`.`name` AS `severity`
                 FROM `issues` 
                 LEFT JOIN `severities` ON `issues`.`severity` = `severities`.`id`
                 LEFT JOIN `comments` ON `issues`.`id` = `comments`.`issue_id`

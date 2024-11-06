@@ -43,6 +43,7 @@ class Issue implements JsonSerializable
                 'title' => $this->title,
                 'severity' => $this->severity,
                 'date_created' => DateFormatter::getDate($this->date_created),
+                'comment_count' => $this->comment_count,
                 'reporter' => $this->reporter,
                 'department' => $this->department,
                 'description' => $this->summary,
