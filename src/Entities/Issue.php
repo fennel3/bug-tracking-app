@@ -28,7 +28,6 @@ class Issue implements JsonSerializable
 
     public function jsonSerialize(): mixed
     {
-
         return [
             'id' => $this->id,
             'title' => $this->title,
