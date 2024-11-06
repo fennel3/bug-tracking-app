@@ -10,7 +10,7 @@ header("Access-Control-Allow-Origin: *");
 
 try {
     $db = DatabaseConnector::connect();
-    if (isset($_GET['completed']) && is_int($_GET['completed'])) {
+    if (isset($_GET['completed']) && is_numeric($_GET['completed'])) {
         $completedFilter = $_GET['completed'];
     } else {
         $completedFilter = null;
