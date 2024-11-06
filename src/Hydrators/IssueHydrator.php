@@ -3,6 +3,7 @@
 namespace ITBugTracking\Hydrators;
 
 use ITBugTracking\Entities\Comment;
+use ITBugTracking\Services\DateFormatter;
 use PDO;
 use ITBugTracking\Entities\Issue;
 
@@ -30,7 +31,7 @@ class IssueHydrator
     }
     public static function getIssue($db, $issue_id)
     {
-        $issueQuery = $db->prepare("SELECT `issues`.`id`,`issues`.`title`,`issues`.`description`,`issues`.`date_created`,`issues`.`reporter`,`issues`.`department`,`comments`.`issue_id`, `issues`.`completed`,`severities`.`name` AS `severity`
+        $issueQuery = $db->prepare("SELECT `issues`.`id`,`issues`.`title`,`issues`.`description` AS 'summary',`issues`.`date_created`,`issues`.`reporter`,`issues`.`department`,`comments`.`issue_id`, `issues`.`completed`,`severities`.`name` AS `severity`
                 FROM `issues` 
                 LEFT JOIN `severities` ON `issues`.`severity` = `severities`.`id`
                 LEFT JOIN `comments` ON `issues`.`id` = `comments`.`issue_id`
@@ -50,7 +51,7 @@ class IssueHydrator
 
 
         foreach($comments as $comment) {
-            $returnedComments[] = ['name' => $comment->name, 'comment' => $comment->comment, 'date_created' => $comment->comment_created];
+            $returnedComments[] = ['name' => $comment->name, 'comment' => $comment->comment, 'date_created' => DateFormatter::getDate($comment->comment_created)];
         }
 
         $issue->comments = $returnedComments;

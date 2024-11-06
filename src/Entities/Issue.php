@@ -2,7 +2,9 @@
 
 namespace ITBugTracking\Entities;
 
+use ITBugTracking\Services\DateFormatter;
 use JsonSerializable;
+
 
 class Issue implements JsonSerializable
 {
@@ -23,13 +25,6 @@ class Issue implements JsonSerializable
         return $completed == 1;
     }
 
-    public static function getDate($date_created): string
-    {
-        $date = new \DateTime($date_created);
-        return $date->format("d/m/Y");
-
-    }
-
     public function jsonSerialize(): mixed
     {
         if (!isset($_GET['id'])) {
@@ -38,7 +33,7 @@ class Issue implements JsonSerializable
                 'title' => $this->title,
                 'summary' => $this->summary,
                 'severity' => $this->severity,
-                'date_created' => self::getDate($this->date_created),
+                'date_created' => DateFormatter::getDate($this->date_created),
                 'comment_count' => $this->comment_count,
                 'completed' => boolval($this->completed)
             ];
@@ -47,7 +42,7 @@ class Issue implements JsonSerializable
                 'id' => $this->id,
                 'title' => $this->title,
                 'severity' => $this->severity,
-                'date_created' => self::getDate($this->date_created),
+                'date_created' => DateFormatter::getDate($this->date_created),
                 'reporter' => $this->reporter,
                 'department' => $this->department,
                 'description' => $this->summary,
