@@ -5,6 +5,7 @@ namespace tests;
 use ITBugTracking\Entities\Issue;
 use PHPUnit\Framework\TestCase;
 use TypeError;
+
 class IssueTest extends TestCase
 {
     public function testIssueJsonSerialize_success()
@@ -123,7 +124,7 @@ class IssueTest extends TestCase
 
         $issue->id = "Hello";
         $issue->title = 1;
-        $issue->description =  2;
+        $issue->description = 2;
         $issue->severity = 3;
         $issue->date_created = 4;
         $issue->comment_count = 5;
@@ -131,5 +132,17 @@ class IssueTest extends TestCase
 
         json_encode($issue);
 
+    }
+
+    public function testGetDateSuccess()
+    {
+
+
+        $date = "2024-11-05 15:56:55";
+
+        $expected = "05/11/2024";
+
+        $actual = getdate($date);
+        $this->assertEquals($actual, $expected);
     }
 }
