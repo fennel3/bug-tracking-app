@@ -10,14 +10,14 @@ header("Access-Control-Allow-Origin: *");
 
 try {
     $db = DatabaseConnector::connect();
-    if (isset($_GET['completed'])) {
+    if (isset($_GET['completed']) && is_numeric($_GET['completed'])) {
         $completedFilter = $_GET['completed'];
     } else {
         $completedFilter = null;
     }
 
     $issues = IssueHydrator::getIssues($db, $completedFilter);
-
+    http_response_code(200);
     echo json_encode(['issues' => $issues]);
 
 } catch (Exception $e) {
