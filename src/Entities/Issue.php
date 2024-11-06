@@ -39,7 +39,7 @@ class Issue implements JsonSerializable
                 'reporter' => $this->reporter,
                 'department' => $this->department,
                 'description' => $this->description,
-                'comment' => $this->comments
+                'comments' => $this->comments
             ];
         }
 
