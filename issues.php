@@ -17,7 +17,7 @@ try {
     }
 
     $issues = IssueHydrator::getIssues($db, $completedFilter);
-
+    http_response_code(200);
     echo json_encode(['issues' => $issues]);
 
 } catch (Exception $e) {

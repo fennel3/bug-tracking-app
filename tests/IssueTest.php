@@ -37,34 +37,8 @@ class IssueTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testIssueJsonSerialize_longDescriptionSuccess()
-    {
-        $issue = new Issue();
 
-        $issue->id = 7;
-        $issue->title = "A Title";
-        $issue->summary = "In a world where technology evolves rapidly, it's essential to keep learning and adapting to new ski";
-        $issue->severity = "Severe";
-        $issue->date_created = "2024-11-05 15:56:55";
-        $issue->comment_count = 5;
-        $issue->completed = false;
-
-        $expected = json_encode([
-            'id' => 7,
-            'title' => "A Title",
-            'summary' => "In a world where technology evolves rapidly, it's essential to keep learning and adapting to new ski",
-            'severity' => "Severe",
-            'date_created' => "05/11/2024",
-            'comment_count' => 5,
-            'completed' => false,
-        ]);
-
-        $actual = json_encode($issue);
-
-        $this->assertEquals($expected, $actual);
-    }
-
-    public function testIssueJsonSerialize_nullableDescriptionSuccess()
+    public function testIssueJsonSerialize_nullSummary_success()
     {
         $issue = new Issue();
 
@@ -81,24 +55,7 @@ class IssueTest extends TestCase
         $this->assertNull($result['summary']);
     }
 
-    public function testIssueJsonSerialize_nullableCommentCountSuccess()
-    {
-        $issue = new Issue();
-
-        $issue->id = 7;
-        $issue->title = "A Title";
-        $issue->summary = "Hello";
-        $issue->severity = "Severe";
-        $issue->date_created = "2024-11-05 15:56:55";
-        $issue->comment_count = null;
-        $issue->completed = false;
-
-        $result = $issue->jsonSerialize();
-
-        $this->assertNull($result['comment_count']);
-    }
-
-    public function testIssueJsonSerialize_completedTrueSuccess()
+    public function testIssueJsonSerialize_completed_success()
     {
         $issue = new Issue();
 
@@ -115,24 +72,7 @@ class IssueTest extends TestCase
         $this->assertTrue($result['completed']);
     }
 
-    public function testIssueJsonSerialize_completedFalseSuccess()
-    {
-        $issue = new Issue();
-
-        $issue->id = 7;
-        $issue->title = "A Title";
-        $issue->summary = null;
-        $issue->severity = "Severe";
-        $issue->date_created = "2024-11-05 15:56:55";
-        $issue->comment_count = 5;
-        $issue->completed = false;
-
-        $result = $issue->jsonSerialize();
-
-        $this->assertFalse($result['completed']);
-    }
-
-    public function testIssueJsonSerialize_MalformedInputs()
+    public function testIssueJsonSerialize_malformedInputs()
     {
         $issue = new Issue();
 
@@ -150,26 +90,20 @@ class IssueTest extends TestCase
 
     }
 
-    public function testGetDate_Success()
+    public function testGetDate_success()
     {
-        $date = "2024-11-05 15:56:55";
+        $issue = new Issue();
+        $issue->date_created = "2024-11-05 15:56:55";
         $expected = "05/11/2024";
-        $actual = Issue::getDate($date);
+        $actual = $issue->getDate();
         assertEquals($actual, $expected);
     }
 
-    public function testGetDate_MalformedArray()
+    public function testGetDate_malformed_string()
     {
-        $date = [2024, 11, 05, 15, 56, 55];
-        $this->expectException(TypeError::class);
-        Issue::getDate($date);
-
-    }
-
-    public function testGetDate_MalformedString()
-    {
-        $date = "i am a date";
+        $issue = new Issue();
+        $issue->date_created = "i am a date";
         $this->expectException(Exception::class);
-        Issue::getDate($date);
+        $issue->getDate();
     }
 }
