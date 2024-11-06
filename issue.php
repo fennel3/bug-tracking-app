@@ -2,6 +2,7 @@
 require 'vendor/autoload.php';
 
 use ITBugTracking\Factories\DatabaseConnector;
+use ITBugTracking\Hydrators\CommentHydrator;
 use ITBugTracking\Hydrators\IssueHydrator;
 
 
@@ -10,7 +11,10 @@ header("Access-Control-Allow-Origin: *");
 
 try {
     $db = DatabaseConnector::connect();
-    $issue = IssueHydrator::getIssue($db, $_GET['id']);
+    if (isset($_GET['id'])) {
+        $issueID = $_GET['id'];
+    }
+    $issue = IssueHydrator::getIssue($db, $issueID);
 
     echo json_encode($issue);
 
