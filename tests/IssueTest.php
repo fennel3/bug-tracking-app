@@ -2,9 +2,12 @@
 
 namespace tests;
 
+use Exception;
 use ITBugTracking\Entities\Issue;
 use PHPUnit\Framework\TestCase;
 use TypeError;
+use function PHPUnit\Framework\assertEquals;
+
 class IssueTest extends TestCase
 {
     public function testIssueJsonSerialize_success()
@@ -13,7 +16,7 @@ class IssueTest extends TestCase
 
         $issue->id = 7;
         $issue->title = "A Title";
-        $issue->description = "A summary of an issue";
+        $issue->summary = "A summary of an issue";
         $issue->severity = "Severe";
         $issue->date_created = "2024-11-05 15:56:55";
         $issue->comment_count = 5;
@@ -24,7 +27,7 @@ class IssueTest extends TestCase
             'title' => "A Title",
             'summary' => "A summary of an issue",
             'severity' => "Severe",
-            'date_created' => "2024-11-05 15:56:55",
+            'date_created' => "05/11/2024",
             'comment_count' => 5,
             'completed' => false,
         ]);
@@ -34,13 +37,14 @@ class IssueTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testIssueJsonSerialize_longDescriptionSuccess()
+
+    public function testIssueJsonSerialize_nullSummary_success()
     {
         $issue = new Issue();
 
         $issue->id = 7;
         $issue->title = "A Title";
-        $issue->description = "In a world where technology evolves rapidly, it's essential to keep learning and adapting to new skills and information to stay ahead.";
+        $issue->summary = null;
         $issue->severity = "Severe";
         $issue->date_created = "2024-11-05 15:56:55";
         $issue->comment_count = 5;
@@ -49,9 +53,9 @@ class IssueTest extends TestCase
         $expected = json_encode([
             'id' => 7,
             'title' => "A Title",
-            'summary' => "In a world where technology evolves rapidly, it's essential to keep learning and adapting to new ski",
+            'summary' => "",
             'severity' => "Severe",
-            'date_created' => "2024-11-05 15:56:55",
+            'date_created' => "05/11/2024",
             'comment_count' => 5,
             'completed' => false,
         ]);
@@ -61,40 +65,13 @@ class IssueTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testIssueJsonSerialize_nullableDescriptionSuccess()
+    public function testIssueJsonSerialize_completed_success()
     {
         $issue = new Issue();
 
         $issue->id = 7;
         $issue->title = "A Title";
-        $issue->description = null;
-        $issue->severity = "Severe";
-        $issue->date_created = "2024-11-05 15:56:55";
-        $issue->comment_count = 5;
-        $issue->completed = false;
-
-        $expected = json_encode([
-            'id' => 7,
-            'title' => "A Title",
-            'summary' => null,
-            'severity' => "Severe",
-            'date_created' => "2024-11-05 15:56:55",
-            'comment_count' => 5,
-            'completed' => false,
-        ]);
-
-        $actual = json_encode($issue);
-
-        $this->assertEquals($expected, $actual);
-    }
-
-    public function testIssueJsonSerialize_completedTrueSuccess()
-    {
-        $issue = new Issue();
-
-        $issue->id = 7;
-        $issue->title = "A Title";
-        $issue->description = null;
+        $issue->summary = "This is a summary";
         $issue->severity = "Severe";
         $issue->date_created = "2024-11-05 15:56:55";
         $issue->comment_count = 5;
@@ -103,9 +80,9 @@ class IssueTest extends TestCase
         $expected = json_encode([
             'id' => 7,
             'title' => "A Title",
-            'summary' => null,
+            'summary' => "This is a summary",
             'severity' => "Severe",
-            'date_created' => "2024-11-05 15:56:55",
+            'date_created' => "05/11/2024",
             'comment_count' => 5,
             'completed' => true,
         ]);
@@ -115,7 +92,7 @@ class IssueTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testIssueJsonSerialize_MalformedInputs()
+    public function testIssueJsonSerialize_malformedInputs()
     {
         $issue = new Issue();
 
@@ -123,13 +100,29 @@ class IssueTest extends TestCase
 
         $issue->id = "Hello";
         $issue->title = 1;
-        $issue->description =  2;
+        $issue->summary = 2;
         $issue->severity = 3;
         $issue->date_created = 4;
         $issue->comment_count = 5;
         $issue->completed = "false";
 
         json_encode($issue);
+    }
 
+    public function testGetDate_success()
+    {
+        $issue = new Issue();
+        $issue->date_created = "2024-11-05 15:56:55";
+        $expected = "05/11/2024";
+        $actual = $issue->getDate();
+        assertEquals($actual, $expected);
+    }
+
+    public function testGetDate_malformed_string()
+    {
+        $issue = new Issue();
+        $issue->date_created = "i am a date";
+        $this->expectException(Exception::class);
+        $issue->getDate();
     }
 }
