@@ -24,6 +24,8 @@ class Issue implements JsonSerializable
             $summary = null;
         }
 
+
+
         return [
             'id' => $this->id,
             'title' => $this->title,
