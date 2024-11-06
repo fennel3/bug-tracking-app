@@ -16,16 +16,10 @@ class Issue implements JsonSerializable
     public int $completed;
     public int|null $issue_id;
     public int|null $comment_count;
-
-    public string|null $name;
-    public string|null $comment;
-    public string|null $comment_created;
+    public array|null $comments;
 
     public function jsonSerialize(): mixed
     {
-
-
-
         if (!isset($_GET['id'])) {
             return [
                 'id' => $this->id,
@@ -37,12 +31,6 @@ class Issue implements JsonSerializable
                 'completed' => boolval($this->completed)
             ];
         } else {
-            $comment_arr = [];
-
-            foreach($this as $row) {
-                var_dump($row);
-            }
-
             return [
                 'id' => $this->id,
                 'title' => $this->title,
@@ -51,7 +39,7 @@ class Issue implements JsonSerializable
                 'reporter' => $this->reporter,
                 'department' => $this->department,
                 'description' => $this->description,
-                'comments' => $comment_arr
+                'comment' => $this->comments
             ];
         }
 

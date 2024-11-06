@@ -2,6 +2,7 @@
 
 namespace ITBugTracking\Hydrators;
 
+use ITBugTracking\Entities\Comment;
 use PDO;
 use ITBugTracking\Entities\Issue;
 
@@ -29,7 +30,7 @@ class IssueHydrator
     }
     public static function getIssue($db, $issue_id)
     {
-        $issueQuery = $db->prepare("SELECT `issues`.`id`,`issues`.`title`,`issues`.`description`,`issues`.`date_created`,`issues`.`reporter`,`issues`.`department`,`comments`.`issue_id`, `comments`.`name`, `comments`.`comment`, `comments`.`date_created` AS 'comment_created', `issues`.`completed`,`severities`.`name` AS `severity`
+        $issueQuery = $db->prepare("SELECT `issues`.`id`,`issues`.`title`,`issues`.`description`,`issues`.`date_created`,`issues`.`reporter`,`issues`.`department`,`comments`.`issue_id`, `issues`.`completed`,`severities`.`name` AS `severity`
                 FROM `issues` 
                 LEFT JOIN `severities` ON `issues`.`severity` = `severities`.`id`
                 LEFT JOIN `comments` ON `issues`.`id` = `comments`.`issue_id`
@@ -38,6 +39,23 @@ class IssueHydrator
             'id' => $issue_id
         ]);
         $issueQuery->setFetchMode(PDO::FETCH_CLASS, Issue::class);
-        return $issueQuery->fetch();
+        $issue = $issueQuery->fetch();
+
+        $commentsQuery = $db->prepare("SELECT `name`, `comment`, `date_created` AS 'comment_created' FROM `comments` WHERE issue_id = :id;");
+        $commentsQuery->execute(['id' => $issue->issue_id]);
+        $commentsQuery->setFetchMode(PDO::FETCH_CLASS, Comment::class);
+        $comments = $commentsQuery->fetchAll();
+
+        $returnedComments = [];
+
+
+        foreach($comments as $comment) {
+            $returnedComments[] = ['name' => $comment->name, 'comment' => $comment->comment, 'date_created' => $comment->comment_created];
+        }
+
+        $issue->comments = $returnedComments;
+
+        return $issue;
+
     }
 }
