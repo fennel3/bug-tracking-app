@@ -53,6 +53,12 @@ class IssueHydrator
         $commentsQuery->setFetchMode(PDO::FETCH_CLASS, Comment::class);
         $comments = $commentsQuery->fetchAll();
 
+        foreach($comments as $comment) {
+            $date = new \DateTime($comment->date_created);
+            $converted_date = $date->format("d/m/Y H:i");
+            $comment->date_created = $converted_date;
+        }
+
         $issue->comment_count = count($comments);
 
         $issue->comments = $comments;
