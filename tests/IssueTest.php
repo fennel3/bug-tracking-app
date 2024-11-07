@@ -18,7 +18,7 @@ class IssueTest extends TestCase
         $issue->title = "A Title";
         $issue->summary = "A summary of an issue";
         $issue->severity = "Severe";
-        $issue->date_created = "05/11/2024";
+        $issue->date_created = "2023-11-26 01:40:33";
         $issue->comment_count = 5;
         $issue->completed = false;
 
@@ -27,7 +27,7 @@ class IssueTest extends TestCase
             'title' => "A Title",
             'summary' => "A summary of an issue",
             'severity' => "Severe",
-            'date_created' => "05/11/2024",
+            'date_created' => "26/11/2023",
             'comment_count' => 5,
             'completed' => false,
         ]);
@@ -45,7 +45,7 @@ class IssueTest extends TestCase
         $issue->title = "A Title";
         $issue->summary = null;
         $issue->severity = "Severe";
-        $issue->date_created = "05/11/2024";
+        $issue->date_created = "2023-11-26 01:40:33";
         $issue->comment_count = 5;
         $issue->completed = false;
 
@@ -54,7 +54,7 @@ class IssueTest extends TestCase
             'title' => "A Title",
             'summary' => null,
             'severity' => "Severe",
-            'date_created' => "05/11/2024",
+            'date_created' => "26/11/2023",
             'comment_count' => 5,
             'completed' => false,
         ]);
@@ -72,7 +72,7 @@ class IssueTest extends TestCase
         $issue->title = "A Title";
         $issue->summary = "This is a summary";
         $issue->severity = "Severe";
-        $issue->date_created = "05/11/2024";
+        $issue->date_created = "2023-11-26 01:40:33";
         $issue->comment_count = 5;
         $issue->completed = true;
 
@@ -81,7 +81,7 @@ class IssueTest extends TestCase
             'title' => "A Title",
             'summary' => "This is a summary",
             'severity' => "Severe",
-            'date_created' => "05/11/2024",
+            'date_created' => "26/11/2023",
             'comment_count' => 5,
             'completed' => true,
         ]);

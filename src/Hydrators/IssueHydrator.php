@@ -11,7 +11,7 @@ class IssueHydrator
 {
     public static function getIssues(PDO $db, $completedFilter): array|null
     {
-        $queryString = "SELECT `issues`.`id`,`issues`.`title`,LEFT(`issues`.`description`,100) AS 'summary', DATE_FORMAT(`issues`.`date_created`, '%d/%m/%Y') AS 'date_created', COUNT(`comments`.`issue_id`) AS 'comment_count',`issues`.`completed`,`severities`.`name` AS 'severity'
+        $queryString = "SELECT `issues`.`id`,`issues`.`title`,LEFT(`issues`.`description`,100) AS 'summary', `issues`.`date_created`, COUNT(`comments`.`issue_id`) AS 'comment_count',`issues`.`completed`,`severities`.`name` AS 'severity'
                 FROM `issues`
                 LEFT JOIN `severities` ON `issues`.`severity` = `severities`.`id`
                 LEFT JOIN `comments` ON `issues`.`id` = `comments`.`issue_id`";
@@ -31,7 +31,7 @@ class IssueHydrator
     }
     public static function getIssue($db, $issue_id)
     {
-        $issueQuery = $db->prepare("SELECT `issues`.`id`,`issues`.`title`,`issues`.`description`, DATE_FORMAT(`issues`.`date_created`, '%d/%m/%Y') AS 'date_created', `issues`.`reporter`,`issues`.`department`, `issues`.`completed`,`severities`.`name` AS 'severity'
+        $issueQuery = $db->prepare("SELECT `issues`.`id`,`issues`.`title`,`issues`.`description`, `issues`.`date_created`, `issues`.`reporter`,`issues`.`department`, `issues`.`completed`,`severities`.`name` AS 'severity'
                 FROM `issues` 
                 LEFT JOIN `severities` ON `issues`.`severity` = `severities`.`id`
                 WHERE `issues`.`id` = :id");
@@ -48,10 +48,16 @@ class IssueHydrator
             return null;
         }
 
-        $commentsQuery = $db->prepare("SELECT `name`, `comment`, DATE_FORMAT(`date_created`, '%d/%m/%Y %H:%i') AS 'date_created' FROM `comments` WHERE issue_id = :id;");
+        $commentsQuery = $db->prepare("SELECT `name`, `comment`, `date_created` FROM `comments` WHERE issue_id = :id;");
         $commentsQuery->execute(['id' => $issue->id]);
         $commentsQuery->setFetchMode(PDO::FETCH_CLASS, Comment::class);
         $comments = $commentsQuery->fetchAll();
+
+        foreach($comments as $comment) {
+            $date = new \DateTime($comment->date_created);
+            $converted_date = $date->format("d/m/Y H:i");
+            $comment->date_created = $converted_date;
+        }
 
         $issue->comment_count = count($comments);
 
