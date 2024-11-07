@@ -30,7 +30,7 @@ class Issue implements JsonSerializable
                 'title' => $this->title,
                 'summary' => $this->summary,
                 'severity' => $this->severity,
-                'date_created' => DateFormatter::getDateCreated($this->date_created),
+                'date_created' => DateFormatter::formatDate($this->date_created),
                 'comment_count' => $this->comment_count,
                 'completed' => $this->getCompleted()
             ];
