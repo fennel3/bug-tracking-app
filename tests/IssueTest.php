@@ -37,7 +37,6 @@ class IssueTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-
     public function testIssueJsonSerialize_nullSummary_success()
     {
         $issue = new Issue();
