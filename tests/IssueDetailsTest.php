@@ -45,7 +45,7 @@ class IssueDetailsTest extends TestCase
 
         $issueDetails->id = 5;
         $issueDetails->title = "A Title";
-        $issueDetails->summary = "This is a description.";
+        $issueDetails->summary = "This is a 100 character summary of the description";
         $issueDetails->severity = "Severe";
         $issueDetails->date_created = "05/11/2024";
         $issueDetails->comment_count = 5;
@@ -61,7 +61,7 @@ class IssueDetailsTest extends TestCase
             'comment_count' => 5,
             'reporter' => "Joe Blogs",
             'department' => 1,
-            'description' => "This is a description.",
+            'description' => "This is a 100 character summary of the description",
             'comments' => []
         ]);
 
