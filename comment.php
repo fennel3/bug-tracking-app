@@ -6,13 +6,15 @@ header('Content-Type: application/json; charset=utf-8');
 header("Access-Control-Allow-Origin: *");
 
 use ITBugTracking\Factories\DatabaseConnector;
-use ITBugTracking\Hydrators\IssueHydrator;
+use ITBugTracking\Hydrators\CommentHydrator;
 
 $db = DatabaseConnector::connect();
+$issue_id = $_GET['id'];
 
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
-$newIssue = IssueHydrator::createComment($db, $data);
+//TODO validation
+$newIssue = CommentHydrator::createComment($db, $data, $issue_id);
 
 header('Content-Type: application/json; charset=utf-8');
 header("Access-Control-Allow-Origin: *");
