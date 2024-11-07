@@ -16,17 +16,11 @@ $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 
 $requiredExist = ValidationService::checkRequiredDataExists($data);
-
 $validTitle = ValidationService::limitTitleCharLengthTo255($data['title']);
-
 $validReporter = ValidationService::limitReporterCharLengthTo255($data['reporter']);
-
 $validDescription = ValidationService::descriptionLimitCharLength($data['description']);
-
 $validSeverity = ValidationService::checkSeverityExists($data['severity']);
-
 $checkSeverityIsInt = ValidationService::checkSeverityIsInt($data['severity']);
-
 $checkDepartmentIsInt = ValidationService::checkDepartmentIsInt($data['department']);
 
 $passedValidation = $requiredExist && $validTitle && $validReporter && $validDescription && $validSeverity && $checkSeverityIsInt && $checkDepartmentIsInt;
