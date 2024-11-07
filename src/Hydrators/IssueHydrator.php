@@ -27,4 +27,11 @@ class IssueHydrator
         $query->setFetchMode(PDO::FETCH_CLASS, Issue::class);
         return $query->fetchAll();
     }
+    public static function updateCompleted(PDO $db, $issue_id)
+    {
+        $query = $db->prepare('UPDATE `issues` SET `completed` = 1 WHERE `id` = :id;');
+        $query->execute([
+            'id' => $issue_id
+        ]);
+    }
 }
