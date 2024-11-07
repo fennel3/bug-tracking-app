@@ -40,7 +40,7 @@ class IssueHydrator
             'description' => $data['description'],
             'severity' => $data['severity'],
         ]);
-        ValidationService::validateCreateIssue($data);
+
 
         $id = $db->lastInsertId();
 
