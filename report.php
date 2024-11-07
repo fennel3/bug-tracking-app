@@ -17,21 +17,18 @@ $data = json_decode($json, true);
 
 $requiredExist = ValidationService::checkRequiredDataExists($data);
 $validTitle = ValidationService::limitTitleCharLengthTo255($data['title']);
-$validReporter = ValidationService::limitReporterCharLengthTo255($data['reporter']);
+$validReporter = ValidationService::limitReporterCharLengthTo255($data['name']);
 $validDescription = ValidationService::descriptionLimitCharLength($data['description']);
-$validSeverity = ValidationService::checkSeverityExists($data['severity']);
+//$validSeverity = ValidationService::checkSeverityExists($data['severity']);
 $checkSeverityIsInt = ValidationService::checkSeverityIsInt($data['severity']);
 $checkDepartmentIsInt = ValidationService::checkDepartmentIsInt($data['department']);
 
-$passedValidation = $requiredExist && $validTitle && $validReporter && $validDescription && $validSeverity && $checkSeverityIsInt && $checkDepartmentIsInt;
+$passedValidation = $requiredExist && $validTitle && $validReporter && $validDescription && $checkSeverityIsInt && $checkDepartmentIsInt;
 
 if (!$passedValidation)
 {
-    $output = [
-        'message' => "oops!"
-    ];
     http_response_code(400);
-    echo $output;
+    echo json_encode(["message" => "Validation failed"]);
     return;
 } else {
 

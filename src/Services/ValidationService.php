@@ -16,33 +16,33 @@ class ValidationService
     //sanitize 255 character limits
     public static function limitTitleCharLengthTo255($data)
     {
-        if (strlen($data['title']) > 255) {
-            $data['title'] = substr($data['title'], 0, 255);
+        if (strlen($data) > 255) {
+            $data = substr($data, 0, 255);
         }
-        return $data['title'];
+        return $data;
     }
 
     public static function limitReporterCharLengthTo255($data)
     {
-        if (strlen($data['reporter']) > 255) {
-            $data['reporter'] = substr($data['reporter'], 0, 255);
+        if (strlen($data) > 255) {
+            $data = substr($data, 0, 255);
         }
-        return $data['reporter'];
+        return $data;
     }
 
     // 100000 character limit for description
     public static function descriptionLimitCharLength($data) {
-        if (strlen($data['description']) > 10000) {
-            $data['description'] = substr($data['description'], 0, 10000);
+        if (strlen($data) > 10000) {
+            $data = substr($data, 0, 10000);
         }
             return $data;
     }
 
-    public static function checkSeverityExists(PDO $db, int | string $severity): bool {
-        $severities = SeverityHydrator::getSeverityIds($db);
-        return in_array($severity, $severities);
-
-    }
+//    public static function checkSeverityExists(int | string $severity): bool {
+//        $severities = SeverityHydrator::getSeverityIds();
+//        return in_array($severity, $severities);
+//
+//    }
 //        check severity and department are integers
 
     public static function checkSeverityIsInt(int | string $severity): int | false {
