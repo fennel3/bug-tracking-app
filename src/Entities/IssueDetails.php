@@ -9,7 +9,7 @@ class IssueDetails extends Issue
     public array|null $comments;
     public string $reporter;
     public int $department;
-    public string $description;
+    public string|null $description;
 
     public function jsonSerialize(): mixed
     {
