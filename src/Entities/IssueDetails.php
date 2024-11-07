@@ -6,10 +6,10 @@ use ITBugTracking\Entities\Issue;
 
 class IssueDetails extends Issue
 {
-    public array|null $comments;
+    public array $comments;
     public string $reporter;
     public int $department;
-    public string $description;
+    public string|null $description;
 
     public function jsonSerialize(): mixed
     {
@@ -21,7 +21,7 @@ class IssueDetails extends Issue
             'comment_count' => $this->comment_count,
             'reporter' => $this->reporter,
             'department' => $this->department,
-            'description' => $this->summary,
+            'description' => $this->description,
             'comments' => $this->comments
         ];
     }
