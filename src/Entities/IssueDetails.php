@@ -6,7 +6,7 @@ use ITBugTracking\Entities\Issue;
 
 class IssueDetails extends Issue
 {
-    public array|null $comments;
+    public array $comments;
     public string $reporter;
     public int $department;
     public string|null $description;
