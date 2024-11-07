@@ -2,7 +2,6 @@
 
 namespace ITBugTracking\Entities;
 
-use ITBugTracking\Services\DateFormatter;
 use JsonSerializable;
 
 class Issue implements JsonSerializable
@@ -27,7 +26,7 @@ class Issue implements JsonSerializable
                 'title' => $this->title,
                 'summary' => $this->summary,
                 'severity' => $this->severity,
-                'date_created' => DateFormatter::formatIssueDate($this->date_created),
+                'date_created' => $this->date_created,
                 'comment_count' => $this->comment_count,
                 'completed' => boolval($this->completed)
             ];
