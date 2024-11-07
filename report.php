@@ -15,26 +15,53 @@ $json = file_get_contents('php://input');
 
 $data = json_decode($json, true);
 
-$newIssue = IssueHydrator::createIssue($db, $data);
+$requiredExist = ValidationService::checkRequiredDataExists($data);
 
+$validTitle = ValidationService::limitTitleCharLengthTo255($data['title']);
 
-header('Content-Type: application/json; charset=utf-8');
+$validReporter = ValidationService::limitReporterCharLengthTo255($data['reporter']);
 
+$validDescription = ValidationService::descriptionLimitCharLength($data['description']);
 
-if ($newIssue) {
+$validSeverity = ValidationService::checkSeverityExists($data['severity']);
+
+$checkSeverityIsInt = ValidationService::checkSeverityIsInt($data['severity']);
+
+$checkDepartmentIsInt = ValidationService::checkDepartmentIsInt($data['department']);
+
+$passedValidation = $requiredExist && $validTitle && $validReporter && $validDescription && $validSeverity && $checkSeverityIsInt && $checkDepartmentIsInt;
+
+if (!$passedValidation)
+{
     $output = [
-        'message' => "Issue created",
-        'id' => $newIssue['id']
-
+        'message' => "oops!"
     ];
-    http_response_code(201);
+    http_response_code(400);
+    echo $output;
+    return;
 } else {
-    $output = [
-        'message' => "Unexpected error",
-    ];
-    http_response_code(500);
+
+    $newIssue = IssueHydrator::createIssue($db, $data);
+
+    if ($newIssue) {
+        $output = [
+            'message' => "Issue created",
+            'id' => $newIssue['id']
+
+        ];
+        http_response_code(201);
+    } else {
+        $output = [
+            'message' => "Unexpected error",
+        ];
+        http_response_code(500);
+    }
+    echo json_encode($output);
+
+
 }
-echo json_encode($output);
+
+
 
 
 

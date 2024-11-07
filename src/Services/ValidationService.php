@@ -3,56 +3,56 @@ namespace ITBugTracking\Services;
 
 use ITBugTracking\Entities\Issue;
 use ITBugTracking\Entities\Severity;
+use ITBugTracking\Hydrators\SeverityHydrator;
+use PDO;
+
 class ValidationService
 {
 
-    public static function validateCreateIssue($data)
+    public static function checkRequiredDataExists($data): bool
     {
-        if (empty($data['reporter']) || empty($data['title']) || empty($data['severity']) || empty($data['department'])) {
-            return null;
-        }
-
+        return !empty($data['reporter']) || !empty($data['title']) || !empty($data['severity']) || !empty($data['department']);
     }
     
 
     //sanitize 255 character limits
-    private static function limitCharLength($checkedString)
+    public static function limitTitleCharLengthTo255($data)
     {
-        if (strlen($checkedString) > 255) {
-            $checkedString = substr($checkedString, 0, 255);
+        if (strlen($data['title']) > 255) {
+            $data['title'] = substr($data['title'], 0, 255);
         }
-        return $checkedString;
+        return $data['title'];
     }
 
-
-    //and check if description field is entered, set to null if not
-    private static function setToNull($data) {
-        if (empty($data['description'])) {
-            $data['description'] = null;
+    public static function limitReporterCharLengthTo255($data)
+    {
+        if (strlen($data['reporter']) > 255) {
+            $data['reporter'] = substr($data['reporter'], 0, 255);
         }
-        return $data;
+        return $data['reporter'];
     }
+
     // 100000 character limit for description
-    private static function descriptionLimitCharLength($data) {
+    public static function descriptionLimitCharLength($data) {
         if (strlen($data['description']) > 10000) {
             $data['description'] = substr($data['description'], 0, 10000);
-        }return $data;
+        }
+            return $data;
     }
 
+    public static function checkSeverityExists(PDO $db, int | string $severity): bool {
+        $severities = SeverityHydrator::getSeverityIds($db);
+        return in_array($severity, $severities);
+
+    }
 //        check severity and department are integers
 
-    private static function checkInteger($data) {
-        if (!filter_var($data['severity'], FILTER_VALIDATE_INT) === false) {
-            return $data['severity'];
-        } else {
-            $data['severity'] = null;
+    public static function checkSeverityIsInt(int | string $severity): int | false {
+        return filter_var($severity, FILTER_VALIDATE_INT);
         }
-        if (!filter_var($data['department'], FILTER_VALIDATE_INT) === false) {
-            return $data['department'];
-        } else {
-            $data['department'] = null;
-        }
-        return $data;
+
+    public static function checkDepartmentIsInt(int | string $department): int | false {
+        return filter_var($department, FILTER_VALIDATE_INT);
     }
 }
 
