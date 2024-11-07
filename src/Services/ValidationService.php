@@ -13,8 +13,6 @@ class ValidationService
         return !empty($data['reporter']) || !empty($data['title']) || !empty($data['severity']) || !empty($data['department']);
     }
 
-
-    //sanitize 255 character limits
     public static function limitTitleCharLengthTo255($data)
     {
         if (isset($data)) {
@@ -35,7 +33,6 @@ class ValidationService
 
     }
 
-    // 100000 character limit for description
     public static function descriptionLimitCharLength($data)
     {
         if (strlen($data) > 10000) {
@@ -49,7 +46,6 @@ class ValidationService
 //        return in_array($severity, $severities);
 //
 //    }
-//        check severity and department are integers
 
     public static function checkSeverityIsInt(int|string $severity): int|false
     {
@@ -66,5 +62,3 @@ class ValidationService
         return filter_var($department, FILTER_VALIDATE_INT);
     }
 }
-
-

@@ -50,14 +50,3 @@ if (!$passedValidation) {
     echo json_encode($output);
 
 }
-
-
-
-
-
-
-
-
-
-
-
