@@ -2,7 +2,6 @@
 
 namespace ITBugTracking\Entities;
 
-use ITBugTracking\Services\DateFormatter;
 use JsonSerializable;
 
 class Issue implements JsonSerializable
@@ -29,7 +28,7 @@ class Issue implements JsonSerializable
                 'severity' => $this->severity,
                 'date_created' => $this->date_created,
                 'comment_count' => $this->comment_count,
-                'completed' => boolval($this->completed)
+                'completed' => $this->getCompleted()
             ];
     }
 }
