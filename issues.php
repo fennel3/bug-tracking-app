@@ -1,7 +1,6 @@
 <?php
 require('./vendor/autoload.php');
 
-use ITBugTracking\Entities\Issue;
 use ITBugTracking\Factories\DatabaseConnector;
 use ITBugTracking\Hydrators\IssueHydrator;
 
