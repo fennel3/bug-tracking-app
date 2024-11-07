@@ -3,61 +3,60 @@ namespace ITBugTracking\Services;
 
 class ValidationService
 {
+    //validate if fields are entered
     public static function createIssue($db, $issue)
     {
-
-        //validate if fields are entered
-        if (empty($issue['name']) ||empty($issue['title']) || empty($issue['severity']) || empty($issue['department']) ) {
-            http_response_code(400 );
-            echo '"message": "Invalid issue data"';
-
-        }
-        //sanitiize 255 character limits
-        $issue['name'] = htmlspecialchars(($issue['name']));
-        $issue['title'] = htmlspecialchars(($issue['title']));
-
-        if (strlen($issue['name'] || $issue['title']) > 255) {
-            http_response_code(400 );
-            echo '"message": "Invalid issue data"';
+        if (empty($issue['name']) || empty($issue['title']) || empty($issue['severity']) || empty($issue['department'])) {
+            return null;
         }
 
-        //and check if description exists, set to null or 100000 character limit
+        $issue = self::limitCharLength($issue);
+        $issue = self::setToNull($issue);
+        $issue = self::descriptionLimitCharLength($issue);
+        $issue = self::checkInteger($issue);
+
+        return $db->lastInsertId();
+    }
+
+    //sanitize 255 character limits
+    private static function limitCharLength($issue)
+    {
+        if (strlen($issue['name']) > 255) {
+            $issue['name'] = substr($issue['name'], 0, 255);
+        }
+        if (strlen($issue['title']) > 255) {
+            $issue['title'] = substr($issue['title'], 0, 255);
+        }
+        return $issue;
+    }
+
+    //and check if description field is entered, set to null if not
+    private static function setToNull($issue) {
         if (empty($issue['description'])) {
             $issue['description'] = null;
-        } else{
-            if (strlen($issue['description']) > 10000) {
-                http_response_code(400 );
-                echo '"message": "Invalid issue data"';
-            }
         }
+        return $issue;
+    }
+    // 100000 character limit for description
+    private static function descriptionLimitCharLength($issue) {
+        if (strlen($issue['description']) > 10000) {
+            $issue['description'] = substr($issue['description'], 0, 10000);
+        }return $issue;
+    }
 
         //check severity and department are integers
-            if(!filter_var($issue['severity'],FILTER_VALIDATE_INT)) {
-                http_response_code(400 );
-                echo '"message": "Invalid issue data"';
+    private static function checkInteger($issue) {
+        if (filter_var($issue['severity'], FILTER_VALIDATE_INT) !== true) {
+                $issue['severity'] = null;
+            } else {
+                return $issue['severity'];
             }
-            if(!filter_var($issue['department'],FILTER_VALIDATE_INT)){
-                http_response_code(400 );
-                echo '"message": "Invalid issue data"';
+
+        if (filter_var($issue['department'], FILTER_VALIDATE_INT) !== true) {
+                $issue['department'] = null;
+            } else {
+                return $issue['department'];
             }
-//
-//        // Fetch severity ID if severity is provided as a name
-//        $severityNumQuery = $db->prepare('SELECT `id` FROM `severities` WHERE `name` = :severity;');
-//        $severityNumQuery->execute([
-//            'severity' => $issue['severity']
-//        ]);
-//
-//        $severityNum = $severityNumQuery->fetch();
-//
-//        $query = $db->prepare('INSERT INTO `comments` (`name`) VALUES (:name); INSERT INTO `issues` (`department`, `title`, `description`, `severity`) VALUES (:department, :title, :description, :image, :severity)');
-//        $query->execute([
-//            'name' => $issue['name'],
-//            'department' => $issue['department'],
-//            'title' => $issue['title'],
-//            'description' => $issue['description'],
-//            'severity' => $severityNum
-//        ]);
-        echo http_response_code(201);
-        return $db->lastInsertId();
-            }
+            return $issue;
+        }
 }
