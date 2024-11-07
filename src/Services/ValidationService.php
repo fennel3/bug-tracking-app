@@ -5,23 +5,15 @@ use ITBugTracking\Entities\Issue;
 use ITBugTracking\Entities\Severity;
 class ValidationService
 {
-    //validate if fields are entered, call the validation functions
-//    public static function validateCreateIssue($data)
-//    {
-////        if (empty($severity['name']) || empty($issue['title']) || empty($issue['severity']) || empty($issue['department'])) {
-////            return null;
-////        }
-//
-//            'reporter' => $data['name'],
-//            'department' => $data['department'],
-//            'title' => $data['title'],
-//            'description' => $data['description'],
-//            'severity' => $data['severity'],
-//
-//
-//
-//
-//    }
+
+    public static function validateCreateIssue($data)
+    {
+        if (empty($data['reporter']) || empty($data['title']) || empty($data['severity']) || empty($data['department'])) {
+            return null;
+        }
+
+    }
+    
 
     //sanitize 255 character limits
     private static function limitCharLength($checkedString)
@@ -34,46 +26,33 @@ class ValidationService
 
 
     //and check if description field is entered, set to null if not
-    private static function setToNull($issue) {
-        if (empty($issue['description'])) {
-            $issue['description'] = null;
+    private static function setToNull($data) {
+        if (empty($data['description'])) {
+            $data['description'] = null;
         }
-        return $issue;
+        return $data;
     }
     // 100000 character limit for description
-    private static function descriptionLimitCharLength($issue) {
-        if (strlen($issue['description']) > 10000) {
-            $issue['description'] = substr($issue['description'], 0, 10000);
-        }return $issue;
+    private static function descriptionLimitCharLength($data) {
+        if (strlen($data['description']) > 10000) {
+            $data['description'] = substr($data['description'], 0, 10000);
+        }return $data;
     }
 
-        //check severity and department are integers
-//    private static function checkInteger($issue) {
-//        if (filter_var($issue['severity'], FILTER_VALIDATE_INT) !== true) {
-//                $issue['severity'] = null;
-//            } else {
-//                return $issue['severity'];
-//            }
-//
-//        if (filter_var($issue['department'], FILTER_VALIDATE_INT) !== true) {
-//                $issue['department'] = null;
-//            } else {
-//                return $issue['department'];
-//            }
-//            return $issue;
-//        }
-    private static function checkInteger($issue) {
-        if (!filter_var($issue['severity'], FILTER_VALIDATE_INT) === false) {
-            return $issue['severity'];
+//        check severity and department are integers
+
+    private static function checkInteger($data) {
+        if (!filter_var($data['severity'], FILTER_VALIDATE_INT) === false) {
+            return $data['severity'];
         } else {
-            $issue['severity'] = null;
+            $data['severity'] = null;
         }
-        if (!filter_var($issue['department'], FILTER_VALIDATE_INT) === false) {
-            return $issue['department'];
+        if (!filter_var($data['department'], FILTER_VALIDATE_INT) === false) {
+            return $data['department'];
         } else {
-            $issue['department'] = null;
+            $data['department'] = null;
         }
-        return $issue;
+        return $data;
     }
 }
 
