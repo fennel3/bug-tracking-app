@@ -49,7 +49,7 @@ class IssueHydrator
         }
 
 
-        $comments = CommentHydrator::getComments($db, $issue_id);
+        $comments = CommentHydrator::getCommentsOnIssue($db, $issue_id);
         $issue->comment_count = count($comments);
         $issue->comments = $comments;
         return $issue;
