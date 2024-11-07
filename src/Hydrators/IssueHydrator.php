@@ -2,6 +2,7 @@
 
 namespace ITBugTracking\Hydrators;
 
+use ITBugTracking\Services\ValidationService;
 use PDO;
 use ITBugTracking\Entities\Issue;
 
@@ -39,6 +40,7 @@ class IssueHydrator
             'description' => $data['description'],
             'severity' => $data['severity'],
         ]);
+        ValidationService::validateCreateIssue($data);
 
         $id = $db->lastInsertId();
 

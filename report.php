@@ -7,6 +7,7 @@ header("Access-Control-Allow-Origin: *");
 
 use ITBugTracking\Factories\DatabaseConnector;
 use ITBugTracking\Hydrators\IssueHydrator;
+use ITBugTracking\Services\ValidationService;
 
 $db = DatabaseConnector::connect();
 
@@ -15,6 +16,7 @@ $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 
 $newIssue = IssueHydrator::createIssue($db, $data);
+
 
 header('Content-Type: application/json; charset=utf-8');
 

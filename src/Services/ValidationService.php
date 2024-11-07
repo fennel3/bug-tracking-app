@@ -3,37 +3,35 @@ namespace ITBugTracking\Services;
 
 use ITBugTracking\Entities\Issue;
 use ITBugTracking\Entities\Severity;
-
 class ValidationService
 {
     //validate if fields are entered, call the validation functions
-    public static function createIssue(Issue $issue, Severity $severity)
-    {
-        if (empty($severity['name']) || empty($issue['title']) || empty($issue['severity']) || empty($issue['department'])) {
-            return null;
-        }
-        $issue = self::limitCharLength($issue);
-        $severity = self::limitCharLength($severity);
-        $issue = self::setToNull($issue);
-        $issue = self::descriptionLimitCharLength($issue);
-        $issue = self::checkInteger($issue);
-
-        return $issue;
-    }
-
-
+//    public static function validateCreateIssue($data)
+//    {
+////        if (empty($severity['name']) || empty($issue['title']) || empty($issue['severity']) || empty($issue['department'])) {
+////            return null;
+////        }
+//
+//            'reporter' => $data['name'],
+//            'department' => $data['department'],
+//            'title' => $data['title'],
+//            'description' => $data['description'],
+//            'severity' => $data['severity'],
+//
+//
+//
+//
+//    }
 
     //sanitize 255 character limits
-    private static function limitCharLength($checked)
+    private static function limitCharLength($checkedString)
     {
-        if (strlen($severity['name']) > 255) {
-            $severity['name'] = substr($severity['name'], 0, 255);
+        if (strlen($checkedString) > 255) {
+            $checkedString = substr($checkedString, 0, 255);
         }
-        if (strlen($issue['title']) > 255) {
-            $issue['title'] = substr($issue['title'], 0, 255);
-        }
-        return $issue;
+        return $checkedString;
     }
+
 
     //and check if description field is entered, set to null if not
     private static function setToNull($issue) {
@@ -78,3 +76,5 @@ class ValidationService
         return $issue;
     }
 }
+
+
