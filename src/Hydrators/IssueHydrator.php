@@ -28,18 +28,25 @@ class IssueHydrator
         return $query->fetchAll();
     }
 
-    public static function createIssue($db){
+    public static function createIssue($db, $data)
+    {
 
        // $date = date('Y-m-d H:i:s', time());
 
         $createQuery = $db->prepare('INSERT INTO `issues`  (`reporter`, `department`, `title`, `description`, `severity`, `date_created`) VALUES (:reporter, :department, :title, :description, :severity, current_timestamp)') ;
         $createQuery->execute([
-            'reporter' => $db->quote($_POST['name']),
-            'department' => $db->quote($_POST['department']),
-            'title' => $db->quote($_POST['title']),
-            'description' => $db->quote($_POST['description']),
-            'severity' => $db->quote($_POST['severity']),
+            'reporter' => $data['name'],
+            'department' => $data['department'],
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'severity' => $data['severity'],
         ]);
-        return true;
+
+        $id = $db->lastInsertId();
+
+        return [ 'success' => true, 'id' => $id ];
     }
 }
+
+//            'description' => $db->quote($_POST['description']),
+//            'severity' => $db->quote($_POST['severity']),

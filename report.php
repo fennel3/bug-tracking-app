@@ -14,19 +14,21 @@ $json = file_get_contents('php://input');
 
 $data = json_decode($json, true);
 
-$newIssue = IssueHydrator::createIssue($data);
+$newIssue = IssueHydrator::createIssue($db, $data);
 
 header('Content-Type: application/json; charset=utf-8');
 
+
 if ($newIssue) {
     $output = [
-        'success' => true,
-        'message' => 'Success!',
+        'message' => "Issue created",
+        'id' => $newIssue['id']
+
     ];
     http_response_code(201);
 } else {
     $output = [
-        'success' => false
+        'message' => "Unexpected error",
     ];
     http_response_code(500);
 }
