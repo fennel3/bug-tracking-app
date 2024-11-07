@@ -21,7 +21,7 @@ class IssueDetails extends Issue
             'comment_count' => $this->comment_count,
             'reporter' => $this->reporter,
             'department' => $this->department,
-            'description' => $this->summary,
+            'description' => $this->description,
             'comments' => $this->comments
         ];
     }

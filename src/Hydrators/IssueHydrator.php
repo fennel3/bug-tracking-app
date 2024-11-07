@@ -31,7 +31,7 @@ class IssueHydrator
     }
     public static function getIssue($db, $issue_id)
     {
-        $issueQuery = $db->prepare("SELECT `issues`.`id`,`issues`.`title`,`issues`.`description` AS 'summary', DATE_FORMAT(`issues`.`date_created`, '%d/%m/%Y') AS 'date_created', `issues`.`reporter`,`issues`.`department`, `issues`.`completed`,`severities`.`name` AS 'severity'
+        $issueQuery = $db->prepare("SELECT `issues`.`id`,`issues`.`title`,`issues`.`description`, DATE_FORMAT(`issues`.`date_created`, '%d/%m/%Y') AS 'date_created', `issues`.`reporter`,`issues`.`department`, `issues`.`completed`,`severities`.`name` AS 'severity'
                 FROM `issues` 
                 LEFT JOIN `severities` ON `issues`.`severity` = `severities`.`id`
                 WHERE `issues`.`id` = :id");
