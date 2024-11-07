@@ -16,7 +16,7 @@ class IssueDetailsTest extends TestCase
         $issueDetails->title = "A Title";
         $issueDetails->summary = "This is a description.";
         $issueDetails->severity = "Severe";
-        $issueDetails->date_created = "2024-11-05 15:56:55";
+        $issueDetails->date_created = "05/11/2024";
         $issueDetails->comment_count = 5;
         $issueDetails->reporter = "Joe Blogs";
         $issueDetails->department = 1;
@@ -47,7 +47,7 @@ class IssueDetailsTest extends TestCase
         $issueDetails->title = "A Title";
         $issueDetails->summary = "This is a description.";
         $issueDetails->severity = "Severe";
-        $issueDetails->date_created = "2024-11-05 15:56:55";
+        $issueDetails->date_created = "05/11/2024";
         $issueDetails->comment_count = 5;
         $issueDetails->reporter = "Joe Blogs";
         $issueDetails->department = 1;

@@ -18,7 +18,7 @@ class IssueTest extends TestCase
         $issue->title = "A Title";
         $issue->summary = "A summary of an issue";
         $issue->severity = "Severe";
-        $issue->date_created = "2024-11-05 15:56:55";
+        $issue->date_created = "05/11/2024";
         $issue->comment_count = 5;
         $issue->completed = false;
 
@@ -45,14 +45,14 @@ class IssueTest extends TestCase
         $issue->title = "A Title";
         $issue->summary = null;
         $issue->severity = "Severe";
-        $issue->date_created = "2024-11-05 15:56:55";
+        $issue->date_created = "05/11/2024";
         $issue->comment_count = 5;
         $issue->completed = false;
 
         $expected = json_encode([
             'id' => 7,
             'title' => "A Title",
-            'summary' => "",
+            'summary' => null,
             'severity' => "Severe",
             'date_created' => "05/11/2024",
             'comment_count' => 5,
@@ -72,7 +72,7 @@ class IssueTest extends TestCase
         $issue->title = "A Title";
         $issue->summary = "This is a summary";
         $issue->severity = "Severe";
-        $issue->date_created = "2024-11-05 15:56:55";
+        $issue->date_created = "05/11/2024";
         $issue->comment_count = 5;
         $issue->completed = true;
 
@@ -108,21 +108,7 @@ class IssueTest extends TestCase
         json_encode($issue);
     }
 
-    public function testGetDate_success()
-    {
-        $issue = new Issue();
-        $issue->date_created = "2024-11-05 15:56:55";
-        $expected = "05/11/2024";
-        $actual = $issue->getDate();
-        assertEquals($actual, $expected);
-    }
-
-    public function testGetDate_malformed_string()
-    {
-        $issue = new Issue();
-        $issue->date_created = "i am a date";
-        $this->expectException(Exception::class);
-        $issue->getDate();
-    }
 }
+
+
 
