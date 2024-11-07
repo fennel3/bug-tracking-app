@@ -8,7 +8,7 @@ use TypeError;
 
 class IssueDetailsTest extends TestCase
 {
-    public function testJsonSerialize_success()
+    public function testIssueDetails_JsonSerialize_success()
     {
         $issueDetails = new IssueDetails();
 
@@ -39,7 +39,7 @@ class IssueDetailsTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testJsonSerialize_NullComments_success()
+    public function testIssueDetails_JsonSerialize_NullComments_success()
     {
         $issueDetails = new IssueDetails();
 
@@ -69,7 +69,7 @@ class IssueDetailsTest extends TestCase
 
         $this->assertEquals($expected, $actual);
     }
-    public function testIssueDetailsJsonSerialize_malformedInputs()
+    public function testIssueDetails_JsonSerialize_malformedInputs()
 
     {
         $issueDetails = new IssueDetails();

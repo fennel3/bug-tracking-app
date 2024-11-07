@@ -10,7 +10,7 @@ use function PHPUnit\Framework\assertEquals;
 
 class IssueTest extends TestCase
 {
-    public function testIssueJsonSerialize_success()
+    public function testIssue_JsonSerialize_success()
     {
         $issue = new Issue();
 
@@ -37,7 +37,7 @@ class IssueTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testIssueJsonSerialize_nullSummary_success()
+    public function testIssue_JsonSerialize_nullSummary_success()
     {
         $issue = new Issue();
 
@@ -64,7 +64,7 @@ class IssueTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testIssueJsonSerialize_completed_success()
+    public function testIssue_JsonSerialize_completed_success()
     {
         $issue = new Issue();
 
@@ -91,7 +91,7 @@ class IssueTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testIssueJsonSerialize_malformedInputs()
+    public function testIssue_JsonSerialize_malformedInputs()
     {
         $issue = new Issue();
 
@@ -109,6 +109,3 @@ class IssueTest extends TestCase
     }
 
 }
-
-
-
