@@ -12,7 +12,7 @@ $db = DatabaseConnector::connect();
 
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
-$newIssue = IssueHydrator::createIssue($db, $data);
+$newIssue = IssueHydrator::createComment($db, $data);
 
 header('Content-Type: application/json; charset=utf-8');
 header("Access-Control-Allow-Origin: *");
