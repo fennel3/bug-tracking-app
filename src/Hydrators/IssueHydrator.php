@@ -4,7 +4,6 @@ namespace ITBugTracking\Hydrators;
 
 use ITBugTracking\Entities\Comment;
 use ITBugTracking\Entities\IssueDetails;
-use ITBugTracking\Services\ValidationService;
 use PDO;
 use ITBugTracking\Entities\Issue;
 

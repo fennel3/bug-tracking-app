@@ -1,8 +1,6 @@
 <?php
 namespace ITBugTracking\Services;
 
-use ITBugTracking\Entities\Issue;
-use ITBugTracking\Entities\Severity;
 use ITBugTracking\Hydrators\SeverityHydrator;
 use PDO;
 
