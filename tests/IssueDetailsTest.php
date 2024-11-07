@@ -39,7 +39,7 @@ class IssueDetailsTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testIssueDetails_JsonSerialize_NullComments_success()
+    public function testIssueDetails_JsonSerialize_emptyArrayComment_success()
     {
         $issueDetails = new IssueDetails();
 
