@@ -3,7 +3,6 @@
 namespace ITBugTracking\Entities;
 
 use ITBugTracking\Entities\Issue;
-use ITBugTracking\Services\DateFormatter;
 
 class IssueDetails extends Issue
 {
@@ -18,7 +17,7 @@ class IssueDetails extends Issue
             'id' => $this->id,
             'title' => $this->title,
             'severity' => $this->severity,
-            'date_created' => DateFormatter::getDate($this->date_created),
+            'date_created' => $this->date_created,
             'comment_count' => $this->comment_count,
             'reporter' => $this->reporter,
             'department' => $this->department,
