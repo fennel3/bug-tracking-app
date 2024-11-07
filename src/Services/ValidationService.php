@@ -1,4 +1,5 @@
 <?php
+
 namespace ITBugTracking\Services;
 
 use ITBugTracking\Hydrators\SeverityHydrator;
@@ -11,15 +12,18 @@ class ValidationService
     {
         return !empty($data['reporter']) || !empty($data['title']) || !empty($data['severity']) || !empty($data['department']);
     }
-    
+
 
     //sanitize 255 character limits
     public static function limitTitleCharLengthTo255($data)
     {
-        if (strlen($data) > 255) {
-            $data = substr($data, 0, 255);
+        if (isset($data)) {
+
+            if (strlen($data) > 255) {
+                $data = substr($data, 0, 255);
+            }
+            return $data;
         }
-        return $data;
     }
 
     public static function limitReporterCharLengthTo255($data)
@@ -28,14 +32,16 @@ class ValidationService
             $data = substr($data, 0, 255);
         }
         return $data;
+
     }
 
     // 100000 character limit for description
-    public static function descriptionLimitCharLength($data) {
+    public static function descriptionLimitCharLength($data)
+    {
         if (strlen($data) > 10000) {
             $data = substr($data, 0, 10000);
         }
-            return $data;
+        return $data;
     }
 
 //    public static function checkSeverityExists(int | string $severity): bool {
@@ -45,11 +51,18 @@ class ValidationService
 //    }
 //        check severity and department are integers
 
-    public static function checkSeverityIsInt(int | string $severity): int | false {
-        return filter_var($severity, FILTER_VALIDATE_INT);
+    public static function checkSeverityIsInt(int|string $severity): int|false
+    {
+        if (is_numeric($severity)) {
+            return intval($severity);
+        } else {
+            return false;
         }
 
-    public static function checkDepartmentIsInt(int | string $department): int | false {
+    }
+
+    public static function checkDepartmentIsInt(int|string $department): int|false
+    {
         return filter_var($department, FILTER_VALIDATE_INT);
     }
 }
