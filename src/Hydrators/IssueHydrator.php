@@ -48,17 +48,11 @@ class IssueHydrator
             return null;
         }
 
-        $commentsQuery = $db->prepare("SELECT `name`, `comment`, DATE_FORMAT(`date_created`, '%d/%m/%Y %H:%i') AS 'date_created' FROM `comments` WHERE issue_id = :id;");
-        $commentsQuery->execute(['id' => $issue->id]);
-        $commentsQuery->setFetchMode(PDO::FETCH_CLASS, Comment::class);
-        $comments = $commentsQuery->fetchAll();
 
+        $comments = CommentHydrator::getComments($db, $issue_id);
         $issue->comment_count = count($comments);
-
         $issue->comments = $comments;
-
         return $issue;
-
     }
 
     public static function createIssue($db, $data): array
