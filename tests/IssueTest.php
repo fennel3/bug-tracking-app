@@ -126,3 +126,4 @@ class IssueTest extends TestCase
         $issue->getDate();
     }
 }
+

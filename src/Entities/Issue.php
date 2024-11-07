@@ -22,14 +22,14 @@ class Issue implements JsonSerializable
 
     public function jsonSerialize(): mixed
     {
-            return [
-                'id' => $this->id,
-                'title' => $this->title,
-                'summary' => $this->summary,
-                'severity' => $this->severity,
-                'date_created' => DateFormatter::getDate($this->date_created),
-                'comment_count' => $this->comment_count,
-                'completed' => boolval($this->completed)
-            ];
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'summary' => $this->summary,
+            'severity' => $this->severity,
+            'date_created' => DateFormatter::getDate($this->date_created),
+            'comment_count' => $this->comment_count,
+            'completed' => boolval($this->completed)
+        ];
     }
 }
