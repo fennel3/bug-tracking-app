@@ -14,7 +14,7 @@ class IssueDetailsTest extends TestCase
 
         $issueDetails->id = 5;
         $issueDetails->title = "A Title";
-        $issueDetails->summary = "This is a description.";
+        $issueDetails->description = "This is a description.";
         $issueDetails->severity = "Severe";
         $issueDetails->date_created = "05/11/2024";
         $issueDetails->comment_count = 5;
@@ -45,7 +45,7 @@ class IssueDetailsTest extends TestCase
 
         $issueDetails->id = 5;
         $issueDetails->title = "A Title";
-        $issueDetails->summary = "This is a description.";
+        $issueDetails->description = "This is a description.";
         $issueDetails->severity = "Severe";
         $issueDetails->date_created = "05/11/2024";
         $issueDetails->comment_count = 5;
@@ -83,7 +83,7 @@ class IssueDetailsTest extends TestCase
         $issueDetails->comment_count = 'comments';
         $issueDetails->reporter = 4;
         $issueDetails->department = 'department';
-        $issueDetails->summary = 2;
+        $issueDetails->description = 2;
         $issueDetails->comments = [1, 2, 3];
 
         json_encode($issueDetails);
