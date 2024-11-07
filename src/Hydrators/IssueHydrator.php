@@ -27,4 +27,23 @@ class IssueHydrator
         $query->setFetchMode(PDO::FETCH_CLASS, Issue::class);
         return $query->fetchAll();
     }
+
+    public static function createIssue($db, $data)
+    {
+
+        $createQuery = $db->prepare('INSERT INTO `issues`  (`reporter`, `department`, `title`, `description`, `severity`, `date_created`) VALUES (:reporter, :department, :title, :description, :severity, current_timestamp)');
+        $createQuery->execute([
+            'reporter' => $data['name'],
+            'department' => $data['department'],
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'severity' => $data['severity'],
+        ]);
+
+        $id = $db->lastInsertId();
+
+        return ['success' => true, 'id' => $id];
+    }
 }
+
+

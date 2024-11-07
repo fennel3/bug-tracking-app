@@ -70,7 +70,6 @@ class ValidationService
         } else {
             $issue['severity'] = null;
         }
-
         if (!filter_var($issue['department'], FILTER_VALIDATE_INT) === false) {
             return $issue['department'];
         } else {

@@ -12,18 +12,30 @@ class Issue implements JsonSerializable
     public string $severity;
     public string $date_created;
     public int $completed;
-    public int|null $comment_count;
+    public int $comment_count;
+
+    public function getCompleted(): bool
+    {
+        return $this->completed == 1;
+    }
+
+    public function getDate(): string
+    {
+        $date = new \DateTime($this->date_created);
+        return $date->format("d/m/Y");
+
+    }
 
     public function jsonSerialize(): mixed
     {
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'summary' => $this->summary,
+            'summary' => $this->summary ?? "",
             'severity' => $this->severity,
-            'date_created' => $this->date_created,
+            'date_created' => $this->getDate(),
             'comment_count' => $this->comment_count,
-            'completed' => boolval($this->completed)
+            'completed' => $this->getCompleted()
         ];
     }
 }
