@@ -51,7 +51,7 @@ class IssueDetailsTest extends TestCase
         $issueDetails->comment_count = 5;
         $issueDetails->reporter = "Joe Blogs";
         $issueDetails->department = 1;
-        $issueDetails->comments = null;
+        $issueDetails->comments = [];
 
         $expected = json_encode([
             'id' => 5,
@@ -62,13 +62,14 @@ class IssueDetailsTest extends TestCase
             'reporter' => "Joe Blogs",
             'department' => 1,
             'description' => "This is a description.",
-            'comments' => null
+            'comments' => []
         ]);
 
         $actual = json_encode($issueDetails);
 
         $this->assertEquals($expected, $actual);
     }
+
     public function testIssueDetailsJsonSerialize_malformedInputs()
 
     {
