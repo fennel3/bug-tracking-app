@@ -48,7 +48,7 @@ class IssueHydrator
             return null;
         }
 
-        $commentsQuery = $db->prepare("SELECT `name`, `comment`, DATE_FORMAT(`date_created`, '%d/%m/%Y %H:%i') AS 'date_created' FROM `comments` WHERE issue_id = :id;");
+        $commentsQuery = $db->prepare("SELECT `name`, `comment`, `date_created` FROM `comments` WHERE issue_id = :id;");
         $commentsQuery->execute(['id' => $issue->id]);
         $commentsQuery->setFetchMode(PDO::FETCH_CLASS, Comment::class);
         $comments = $commentsQuery->fetchAll();
