@@ -28,7 +28,7 @@ class IssueHydrator
         return $query->fetchAll();
     }
 
-    public static function createIssue($db, $data)
+    public static function createIssue($db, $data): array
     {
 
         $createQuery = $db->prepare('INSERT INTO `issues`  (`reporter`, `department`, `title`, `description`, `severity`, `date_created`) VALUES (:reporter, :department, :title, :description, :severity, current_timestamp)');
