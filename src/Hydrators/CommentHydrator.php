@@ -14,5 +14,4 @@ class CommentHydrator
         $commentCountQuery->execute();
         return $commentCountQuery->fetch();
     }
-
 }
