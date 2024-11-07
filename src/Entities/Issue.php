@@ -27,7 +27,7 @@ class Issue implements JsonSerializable
                 'title' => $this->title,
                 'summary' => $this->summary,
                 'severity' => $this->severity,
-                'date_created' => DateFormatter::getDate($this->date_created),
+                'date_created' => DateFormatter::formatIssueDate($this->date_created),
                 'comment_count' => $this->comment_count,
                 'completed' => boolval($this->completed)
             ];
