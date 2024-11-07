@@ -1,33 +1,33 @@
 <?php
 namespace ITBugTracking\Services;
 
-use ITBugTracking\Factories\DatabaseConnector;
-use ITBugTracking\Hydrators\IssueHydrator;
-
-$db = DatabaseConnector::connect();
-
+use ITBugTracking\Entities\Issue;
+use ITBugTracking\Entities\Severity;
 
 class ValidationService
 {
-    //validate if fields are entered
-    public static function createIssue($db, $issue)
+    //validate if fields are entered, call the validation functions
+    public static function createIssue(Issue $issue, Severity $severity)
     {
-        if (empty($issue['name']) || empty($issue['title']) || empty($issue['severity']) || empty($issue['department'])) {
+        if (empty($severity['name']) || empty($issue['title']) || empty($issue['severity']) || empty($issue['department'])) {
             return null;
         }
         $issue = self::limitCharLength($issue);
+        $severity = self::limitCharLength($severity);
         $issue = self::setToNull($issue);
         $issue = self::descriptionLimitCharLength($issue);
         $issue = self::checkInteger($issue);
 
-        return $db->lastInsertId();
+        return $issue;
     }
 
+
+
     //sanitize 255 character limits
-    private static function limitCharLength($issue)
+    private static function limitCharLength($checked)
     {
-        if (strlen($issue['name']) > 255) {
-            $issue['name'] = substr($issue['name'], 0, 255);
+        if (strlen($severity['name']) > 255) {
+            $severity['name'] = substr($severity['name'], 0, 255);
         }
         if (strlen($issue['title']) > 255) {
             $issue['title'] = substr($issue['title'], 0, 255);
