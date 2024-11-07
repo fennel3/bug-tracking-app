@@ -31,9 +31,7 @@ class IssueHydrator
     public static function createIssue($db, $data)
     {
 
-       // $date = date('Y-m-d H:i:s', time());
-
-        $createQuery = $db->prepare('INSERT INTO `issues`  (`reporter`, `department`, `title`, `description`, `severity`, `date_created`) VALUES (:reporter, :department, :title, :description, :severity, current_timestamp)') ;
+        $createQuery = $db->prepare('INSERT INTO `issues`  (`reporter`, `department`, `title`, `description`, `severity`, `date_created`) VALUES (:reporter, :department, :title, :description, :severity, current_timestamp)');
         $createQuery->execute([
             'reporter' => $data['name'],
             'department' => $data['department'],
@@ -44,9 +42,8 @@ class IssueHydrator
 
         $id = $db->lastInsertId();
 
-        return [ 'success' => true, 'id' => $id ];
+        return ['success' => true, 'id' => $id];
     }
 }
 
-//            'description' => $db->quote($_POST['description']),
-//            'severity' => $db->quote($_POST['severity']),
+
