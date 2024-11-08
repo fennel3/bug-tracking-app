@@ -38,8 +38,6 @@ try {
         $severityExists = ValidationService::checkSeverityExists($db, $data['severity']);
     } else {
         $severityExists = false;
-        http_response_code(400);
-        echo json_encode(["message" => "Invalid severity data"]);
     }
 
     $departmentIsNumeric = is_numeric($data['department']);
@@ -48,8 +46,6 @@ try {
         $departmentExists = ValidationService::checkDepartmentExists($db, $data['department']);
     } else {
         $departmentExists = false;
-        http_response_code(400);
-        echo json_encode(["message" => "Invalid department data"]);
     }
 
     $passedValidation =
@@ -80,13 +76,3 @@ try {
     http_response_code(500);
     echo json_encode($output);
 }
-
-
-
-
-
-
-
-
-
-

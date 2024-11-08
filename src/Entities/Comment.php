@@ -10,6 +10,7 @@ class Comment implements JsonSerializable
     public string $name;
     public string $comment;
     public string $date_created;
+    public int $issue_id;
 
     public function formatCommentDate(): string {
         $date = new DateTime($this->date_created);
