@@ -4,6 +4,7 @@ namespace ITBugTracking\Services;
 
 use ITBugTracking\Hydrators\IssueHydrator;
 use ITBugTracking\Hydrators\SeverityHydrator;
+use Exception;
 use PDO;
 
 class ValidationService
@@ -14,6 +15,9 @@ class ValidationService
     }
 
     public static function validateStringInput(string $input, int $limit): string | false {
+        if ($limit < 1){
+            throw new Exception("Limit must be a positive integer");
+        }
         $output = trim($input);
         if (strlen($output) > $limit) {
             $output = false;
@@ -21,14 +25,6 @@ class ValidationService
             $output = htmlspecialchars($output);
         }
         return $output;
-    }
-
-    public static function descriptionLimitCharLength($data)
-    {
-        if (strlen($data) > 10000) {
-            $data = substr($data, 0, 10000);
-        }
-        return $data;
     }
 
     public static function checkSeverityExists(PDO $db, int $severity): bool {
@@ -40,5 +36,4 @@ class ValidationService
         $departments = IssueHydrator::getDepartmentIds($db);
         return in_array($department, $departments);
     }
-
 }
