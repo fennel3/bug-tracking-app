@@ -8,5 +8,4 @@ class Comment
     public string $comment;
     public string $date_created;
     public int $issue_id;
-
 }

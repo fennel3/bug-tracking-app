@@ -19,8 +19,8 @@ $requiredExist = ValidationService::checkRequiredDataExists($data);
 
 if (!$requiredExist) {
     http_response_code(400);
-    echo json_encode(["message" => "Invalid issue data"]);  // make sure to use the proper message fromt he API spec
-    return;  // could also use exit() to ensure an early exit
+    echo json_encode(["message" => "Invalid issue data"]);
+    return;
 }
 
 $data['title'] = ValidationService::validateStringInput($data['title'], 100);
@@ -56,7 +56,7 @@ $passedValidation =
 if (!$passedValidation) {
     http_response_code(400);
     echo json_encode(["message" => "Invalid issue data"]);
-    return;  // could also use exit()
+    return;
 }
 
 $newIssue = IssueHydrator::createIssue($db, $data);
@@ -74,15 +74,3 @@ $output = [
     http_response_code(500);
 }
 echo json_encode($output);
-
-
-
-
-
-
-
-
-
-
-
-
