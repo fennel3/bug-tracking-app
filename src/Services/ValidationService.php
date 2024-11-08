@@ -10,7 +10,7 @@ class ValidationService
 
     public static function checkRequiredDataExists($data): bool
     {
-        return !empty($data['reporter']) || !empty($data['title']) || !empty($data['severity']) || !empty($data['department']);
+        return !empty($data['reporter']) && !empty($data['title']) && !empty($data['severity']) && !empty($data['department']);
     }
 
     public static function limitTitleCharLengthTo255($data)
@@ -23,6 +23,17 @@ class ValidationService
             return $data;
         }
     }
+
+    public static function validateStringInput(string $input, int $limit): string | false {
+        $output = trim($input);
+        if (strlen($output) > $limit) {
+            $output = false;
+        } else {
+            $output = htmlspecialchars($output);
+        }
+        return $output;
+    }
+
 
     public static function limitReporterCharLengthTo255($data)
     {

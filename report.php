@@ -15,38 +15,76 @@ $json = file_get_contents('php://input');
 
 $data = json_decode($json, true);
 
+// first tip, space it out - one newline between unrelated things helps you keep track of what you're doing
+// track the result of true/false validations in variables
 $requiredExist = ValidationService::checkRequiredDataExists($data);
-$validTitle = ValidationService::limitTitleCharLengthTo255($data['title']);
-$validReporter = ValidationService::limitReporterCharLengthTo255($data['name']);
-$data['description'] = ValidationService::descriptionLimitCharLength($data['description']);
-//$validSeverity = ValidationService::checkSeverityExists($data['severity']);
-$data['severity'] = ValidationService::checkSeverityIsInt($data['severity']);
-$checkDepartmentIsInt = ValidationService::checkDepartmentIsInt($data['department']);
-echo '<pre>';
-var_dump($checkDepartmentIsInt);
-$passedValidation = $requiredExist && $validTitle && $validReporter && $data['severity'] && $checkDepartmentIsInt;
+
+if (!$requiredExist) {
+    http_response_code(400);
+    echo json_encode(["message" => "Invalid issue data"]);  // make sure to use the proper message fromt he API spec
+    return;  // could also use exit() to ensure an early exit
+}
+
+$data['title'] = ValidationService::validateStringInput($data['title'], 100);
+
+$data['name'] = ValidationService::validateStringInput($data['name'], 255);
+
+if (isset($data['description'])) {
+    $data['description'] = ValidationService::validateStringInput($data['description'], 65535);
+}
+
+$severityIsNumeric = is_numeric($data['severity']);
+if ($severityIsNumeric) {
+    $data['severity'] = (int)$data['severity'];
+    $severityExists = ValidationService::checkSeverityExists($db, $data['severity']);
+} else {
+    $severityExists = false;
+}
+
+$departmentIsNumeric = is_numeric($data['department']);
+if ($departmentIsNumeric) {
+    $data['department'] = (int)$data['department'];
+    $departmentExists = ValidationService::checkDepartmentExists($db, $data['department']);
+} else {
+    $departmentExists = false;
+}
+
+$passedValidation =
+    $data['title']
+    && $data['name']
+    && $severityExists
+    && $departmentExists;
 
 if (!$passedValidation) {
     http_response_code(400);
-    echo json_encode(["message" => "Validation failed"]);
-    return;
-} else {
-
-    $newIssue = IssueHydrator::createIssue($db, $data);
-
-    if ($newIssue) {
-        $output = [
-            'message' => "Issue created",
-            'id' => $newIssue['id']
-
-        ];
-        http_response_code(201);
-    } else {
-        $output = [
-            'message' => "Unexpected error",
-        ];
-        http_response_code(500);
-    }
-    echo json_encode($output);
-
+    echo json_encode(["message" => "Invalid issue data"]);
+    return;  // could also use exit()
 }
+
+$newIssue = IssueHydrator::createIssue($db, $data);
+
+if ($newIssue) {
+$output = [
+        'message' => "Issue created",
+        'id' => $newIssue['id']
+    ];
+    http_response_code(201);
+} else {
+    $output = [
+        'message' => "Unexpected error",
+    ];
+    http_response_code(500);
+}
+echo json_encode($output);
+
+
+
+
+
+
+
+
+
+
+
+
