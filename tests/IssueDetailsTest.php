@@ -16,7 +16,7 @@ class IssueDetailsTest extends TestCase
         $issueDetails->title = "A Title";
         $issueDetails->description = "This is a description.";
         $issueDetails->severity = "Severe";
-        $issueDetails->date_created = "05/11/2024";
+        $issueDetails->date_created = "2023-11-26 01:40:33";
         $issueDetails->comment_count = 5;
         $issueDetails->reporter = "Joe Blogs";
         $issueDetails->department = 1;
@@ -26,7 +26,7 @@ class IssueDetailsTest extends TestCase
             'id' => 5,
             'title' => "A Title",
             'severity' => "Severe",
-            'date_created' => "05/11/2024",
+            'date_created' => "26/11/2023",
             'comment_count' => 5,
             'reporter' => "Joe Blogs",
             'department' => 1,
@@ -39,30 +39,30 @@ class IssueDetailsTest extends TestCase
         $this->assertEquals($expected, $actual);
     }
 
-    public function testIssueDetails_JsonSerialize_NullComments_success()
+    public function testIssueDetails_JsonSerialize_emptyArrayComment_success()
     {
         $issueDetails = new IssueDetails();
 
         $issueDetails->id = 5;
         $issueDetails->title = "A Title";
-        $issueDetails->description = "This is a description.";
+        $issueDetails->description = "this is a description";
         $issueDetails->severity = "Severe";
-        $issueDetails->date_created = "05/11/2024";
+        $issueDetails->date_created = "2023-11-26 01:40:33";
         $issueDetails->comment_count = 5;
         $issueDetails->reporter = "Joe Blogs";
         $issueDetails->department = 1;
-        $issueDetails->comments = null;
+        $issueDetails->comments = [];
 
         $expected = json_encode([
             'id' => 5,
             'title' => "A Title",
             'severity' => "Severe",
-            'date_created' => "05/11/2024",
+            'date_created' => "26/11/2023",
             'comment_count' => 5,
             'reporter' => "Joe Blogs",
             'department' => 1,
-            'description' => "This is a description.",
-            'comments' => null
+            'description' => "this is a description",
+            'comments' => []
         ]);
 
         $actual = json_encode($issueDetails);
@@ -83,7 +83,7 @@ class IssueDetailsTest extends TestCase
         $issueDetails->comment_count = 'comments';
         $issueDetails->reporter = 4;
         $issueDetails->department = 'department';
-        $issueDetails->description = 2;
+        $issueDetails->summary = 2;
         $issueDetails->comments = [1, 2, 3];
 
         json_encode($issueDetails);

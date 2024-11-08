@@ -11,7 +11,7 @@ class IssueHydrator
 {
     public static function getIssues(PDO $db, $completedFilter): array|null
     {
-        $queryString = "SELECT `issues`.`id`,`issues`.`title`,LEFT(`issues`.`description`,100) AS 'summary', DATE_FORMAT(`issues`.`date_created`, '%d/%m/%Y') AS 'date_created', COUNT(`comments`.`issue_id`) AS 'comment_count',`issues`.`completed`,`severities`.`name` AS 'severity'
+        $queryString = "SELECT `issues`.`id`,`issues`.`title`,LEFT(`issues`.`description`,100) AS 'summary', `issues`.`date_created`, COUNT(`comments`.`issue_id`) AS 'comment_count',`issues`.`completed`,`severities`.`name` AS 'severity'
                 FROM `issues`
                 LEFT JOIN `severities` ON `issues`.`severity` = `severities`.`id`
                 LEFT JOIN `comments` ON `issues`.`id` = `comments`.`issue_id`";
@@ -31,7 +31,7 @@ class IssueHydrator
     }
     public static function getIssue($db, $issue_id)
     {
-        $issueQuery = $db->prepare("SELECT `issues`.`id`,`issues`.`title`,`issues`.`description`, DATE_FORMAT(`issues`.`date_created`, '%d/%m/%Y') AS 'date_created', `issues`.`reporter`,`issues`.`department`, `issues`.`completed`,`severities`.`name` AS 'severity'
+        $issueQuery = $db->prepare("SELECT `issues`.`id`,`issues`.`title`,`issues`.`description`, `issues`.`date_created`, `issues`.`reporter`,`issues`.`department`, `issues`.`completed`,`severities`.`name` AS 'severity'
                 FROM `issues` 
                 LEFT JOIN `severities` ON `issues`.`severity` = `severities`.`id`
                 WHERE `issues`.`id` = :id");
@@ -48,11 +48,12 @@ class IssueHydrator
             return null;
         }
 
-
-        $comments = CommentHydrator::getCommentsOnIssue($db, $issue_id);
+        $comments = CommentHydrator::getCommentsOnIssue($db, $issue);
         $issue->comment_count = count($comments);
         $issue->comments = $comments;
+
         return $issue;
+
     }
 
     public static function createIssue($db, $data): array
@@ -72,5 +73,14 @@ class IssueHydrator
         return ['success' => true, 'id' => $id];
     }
 
+    public static function getDepartmentIds(PDO $db): array
+    {
+        $queryString = "SELECT `department` FROM `issues` GROUP BY `department`; ";
 
+        $query = $db->prepare($queryString);
+        $query->execute();
+
+        $query->setFetchMode(PDO::FETCH_COLUMN, 0);
+        return $query->fetchAll();
+    }
 }
