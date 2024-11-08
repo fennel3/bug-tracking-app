@@ -41,26 +41,14 @@ class IssueHydrator
         ]);
 
         $issueQuery->setFetchMode(PDO::FETCH_CLASS, IssueDetails::class);
-
         $issue = $issueQuery->fetch();
 
         if (!$issue) {
             return null;
         }
 
-        $commentsQuery = $db->prepare("SELECT `name`, `comment`, `date_created` FROM `comments` WHERE issue_id = :id;");
-        $commentsQuery->execute(['id' => $issue->id]);
-        $commentsQuery->setFetchMode(PDO::FETCH_CLASS, Comment::class);
-        $comments = $commentsQuery->fetchAll();
-
-        foreach($comments as $comment) {
-            $date = new \DateTime($comment->date_created);
-            $converted_date = $date->format("d/m/Y H:i");
-            $comment->date_created = $converted_date;
-        }
-
+        $comments = CommentHydrator::getCommentsOnIssue($db, $issue);
         $issue->comment_count = count($comments);
-
         $issue->comments = $comments;
 
         return $issue;
