@@ -20,8 +20,6 @@ class Issue implements JsonSerializable
         return $this->completed == 1;
     }
 
-
-
     public function jsonSerialize(): mixed
     {
 

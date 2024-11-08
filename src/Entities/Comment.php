@@ -1,6 +1,7 @@
 <?php
 
 namespace ITBugTracking\Entities;
+use DateTime;
 use JsonSerializable;
 
 class Comment implements JsonSerializable
@@ -11,7 +12,7 @@ class Comment implements JsonSerializable
     public string $date_created;
 
     public function formatCommentDate($date_created): string {
-        $date = new \DateTime($date_created);
+        $date = new DateTime($date_created);
         return $date->format("d/m/Y H:i");
     }
 
