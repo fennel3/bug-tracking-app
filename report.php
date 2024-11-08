@@ -50,7 +50,8 @@ if ($departmentIsNumeric) {
 }
 
 $passedValidation =
-    $data['title']
+    $requiredExist
+    && $data['title']
     && $data['name']
     && $severityExists
     && $departmentExists;

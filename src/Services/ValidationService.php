@@ -2,6 +2,7 @@
 
 namespace ITBugTracking\Services;
 
+use ITBugTracking\Hydrators\IssueHydrator;
 use ITBugTracking\Hydrators\SeverityHydrator;
 use PDO;
 
@@ -11,17 +12,6 @@ class ValidationService
     public static function checkRequiredDataExists($data): bool
     {
         return !empty($data['reporter']) && !empty($data['title']) && !empty($data['severity']) && !empty($data['department']);
-    }
-
-    public static function limitTitleCharLengthTo255($data)
-    {
-        if (isset($data)) {
-
-            if (strlen($data) > 255) {
-                $data = substr($data, 0, 255);
-            }
-            return $data;
-        }
     }
 
     public static function validateStringInput(string $input, int $limit): string | false {
@@ -34,16 +24,6 @@ class ValidationService
         return $output;
     }
 
-
-    public static function limitReporterCharLengthTo255($data)
-    {
-        if (strlen($data) > 255) {
-            $data = substr($data, 0, 255);
-        }
-        return $data;
-
-    }
-
     public static function descriptionLimitCharLength($data)
     {
         if (strlen($data) > 10000) {
@@ -52,24 +32,14 @@ class ValidationService
         return $data;
     }
 
-//    public static function checkSeverityExists(int | string $severity): bool {
-//        $severities = SeverityHydrator::getSeverityIds();
-//        return in_array($severity, $severities);
-//
-//    }
-
-    public static function checkSeverityIsInt(int|string $severity): int|false
-    {
-        if (is_numeric($severity)) {
-            return intval($severity);
-        } else {
-            return false;
-        }
-
+    public static function checkSeverityExists(PDO $db, int $severity): bool {
+        $severities = SeverityHydrator::getSeverityIds($db);
+        return in_array($severity, $severities);
     }
 
-    public static function checkDepartmentIsInt(int|string $department): int|false
-    {
-        return filter_var($department, FILTER_VALIDATE_INT);
+    public static function checkDepartmentExists(PDO $db, int $department): bool {
+        $departments = IssueHydrator::getDepartmentIds($db);
+        return in_array($department, $departments);
     }
+
 }

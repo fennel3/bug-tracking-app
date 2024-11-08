@@ -83,4 +83,13 @@ class IssueHydrator
 
         return ['success' => true, 'id' => $id];
     }
+
+    public static function getDepartmentIds(PDO $db): array
+    {
+        $queryString = "SELECT `department` FROM `issues` GROUP BY `department`; ";
+
+        $query = $db->prepare($queryString);
+        $query->execute();
+        return $query->fetchAll();
+    }
 }
