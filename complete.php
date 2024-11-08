@@ -13,15 +13,22 @@ try {
         $issueID = $_GET['id'];
     } else {
         http_response_code(400);
-        echo json_encode(["message" => "missing issue id"]);
+        echo json_encode(["message" => "Missing issue id"]);
         return;
     }
 
-    $updatedSuccessfully = IssueHydrator::updateCompleted($db, $issueID);
+    $issue = IssueHydrator::getIssue($db, $issueID);
+
+    if (is_null($issue)) {
+        http_response_code(400);
+        echo json_encode(["message" => "Unknown issue id"]);
+        return;
+    }
+
+    IssueHydrator::updateCompleted($db, $issueID);
 
     http_response_code(200);
-    echo json_encode(["message" => "Issue ".$issueID." has been completed"]);
-
+    echo json_encode(["message" => "Issue " . $issueID . " has been completed"]);
 
 } catch (Exception $e) {
     http_response_code(500);
