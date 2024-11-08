@@ -36,9 +36,4 @@ class ValidationService
             return false;
         }
     }
-
-    public static function checkDepartmentIsInt(int|string $department): int|false
-    {
-        return filter_var($department, FILTER_VALIDATE_INT);
-    }
 }
