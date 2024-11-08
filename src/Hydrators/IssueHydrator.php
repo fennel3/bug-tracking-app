@@ -41,7 +41,6 @@ class IssueHydrator
         ]);
 
         $issueQuery->setFetchMode(PDO::FETCH_CLASS, IssueDetails::class);
-
         $issue = $issueQuery->fetch();
 
         if (!$issue) {
@@ -49,9 +48,7 @@ class IssueHydrator
         }
 
         $comments = CommentHydrator::getCommentsOnIssue($db, $issue);
-
         $issue->comment_count = count($comments);
-
         $issue->comments = $comments;
 
         return $issue;
