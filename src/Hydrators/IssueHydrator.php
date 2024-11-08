@@ -90,6 +90,8 @@ class IssueHydrator
 
         $query = $db->prepare($queryString);
         $query->execute();
+
+        $query->setFetchMode(PDO::FETCH_COLUMN, 0);
         return $query->fetchAll();
     }
 }

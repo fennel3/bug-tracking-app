@@ -15,8 +15,6 @@ $json = file_get_contents('php://input');
 
 $data = json_decode($json, true);
 
-// first tip, space it out - one newline between unrelated things helps you keep track of what you're doing
-// track the result of true/false validations in variables
 $requiredExist = ValidationService::checkRequiredDataExists($data);
 
 if (!$requiredExist) {
@@ -50,8 +48,7 @@ if ($departmentIsNumeric) {
 }
 
 $passedValidation =
-    $requiredExist
-    && $data['title']
+    $data['title']
     && $data['name']
     && $severityExists
     && $departmentExists;

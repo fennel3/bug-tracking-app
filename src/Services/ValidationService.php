@@ -8,10 +8,9 @@ use PDO;
 
 class ValidationService
 {
-
     public static function checkRequiredDataExists($data): bool
     {
-        return !empty($data['reporter']) && !empty($data['title']) && !empty($data['severity']) && !empty($data['department']);
+        return !empty($data['name']) && !empty($data['title']) && !empty($data['severity']) && !empty($data['department']);
     }
 
     public static function validateStringInput(string $input, int $limit): string | false {
