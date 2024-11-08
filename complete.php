@@ -11,15 +11,13 @@ try {
     $db = DatabaseConnector::connect();
     if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         $issueID = $_GET['id'];
-    }
-
-    $updatedSuccessfully = IssueHydrator::updateCompleted($db, $issueID);
-
-    if (is_null($updatedSuccessfully)) {
+    } else {
         http_response_code(400);
         echo json_encode(["message" => "missing issue id"]);
         return;
     }
+
+    $updatedSuccessfully = IssueHydrator::updateCompleted($db, $issueID);
 
     http_response_code(200);
     echo json_encode(["message" => "Issue ".$issueID." has been completed"]);
