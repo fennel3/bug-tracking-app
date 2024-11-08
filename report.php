@@ -16,9 +16,9 @@ $json = file_get_contents('php://input');
 $data = json_decode($json, true);
 
 $requiredExist = ValidationService::checkRequiredDataExists($data);
-$validTitle = ValidationService::limitTitleCharLengthTo255($data['title']);
-$validReporter = ValidationService::limitReporterCharLengthTo255($data['name']);
-$data['description'] = ValidationService::descriptionLimitCharLength($data['description']);
+$validTitle = ValidationService::limitTitleCharacterLength($data['title']);
+$validReporter = ValidationService::limitReporterCharacterLength($data['name']);
+$data['description'] = ValidationService::limitDescriptionCharacterLength($data['description']);
 //$validSeverity = ValidationService::checkSeverityExists($data['severity']);
 $data['severity'] = ValidationService::checkSeverityIsInt($data['severity']);
 $checkDepartmentIsInt = ValidationService::checkDepartmentIsInt($data['department']);

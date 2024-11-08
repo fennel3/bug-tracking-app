@@ -10,51 +10,31 @@ class ValidationService
 
     public static function checkRequiredDataExists($data): bool
     {
-        return !empty($data['reporter']) || !empty($data['title']) || !empty($data['severity']) || !empty($data['department']);
+        return !empty($data['reporter']) && !empty($data['title']) && !empty($data['severity']) && !empty($data['department']);
     }
 
-    public static function limitTitleCharLengthTo255($data)
+    public static function limitTitleCharacterLength($data): string
     {
-        if (isset($data)) {
-
-            if (strlen($data) > 255) {
-                $data = substr($data, 0, 255);
-            }
-            return $data;
-        }
+        return substr($data, 0, 255);
     }
 
-    public static function limitReporterCharLengthTo255($data)
+    public static function limitReporterCharacterLength($data): string
     {
-        if (strlen($data) > 255) {
-            $data = substr($data, 0, 255);
-        }
-        return $data;
-
+        return substr($data, 0, 255);
     }
 
-    public static function descriptionLimitCharLength($data)
+    public static function limitDescriptionCharacterLength($data): string
     {
-        if (strlen($data) > 10000) {
-            $data = substr($data, 0, 10000);
-        }
-        return $data;
+        return substr($data, 0, 10000);
     }
 
-//    public static function checkSeverityExists(int | string $severity): bool {
-//        $severities = SeverityHydrator::getSeverityIds();
-//        return in_array($severity, $severities);
-//
-//    }
-
-    public static function checkSeverityIsInt(int|string $severity): int|false
+    public static function checkIsInt(int|string $input): int|false
     {
-        if (is_numeric($severity)) {
-            return intval($severity);
+        if (is_numeric($input)) {
+            return intval($input);
         } else {
             return false;
         }
-
     }
 
     public static function checkDepartmentIsInt(int|string $department): int|false
