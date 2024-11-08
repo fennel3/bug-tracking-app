@@ -26,7 +26,7 @@ header("Access-Control-Allow-Origin: *");
 $data['name'] = ValidationService::validateStringInput($data['name'], 255);
 
 if (isset($data['comment'])) {
-    $data['comment'] = ValidationService::validateStringInput($data['comment'], 65535);
+    return $data['comment'] = ValidationService::validateStringInput($data['comment'], 65535);
 }
 
 $passedValidation =
