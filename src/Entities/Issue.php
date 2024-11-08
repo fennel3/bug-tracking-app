@@ -20,8 +20,8 @@ class Issue implements JsonSerializable
         return $this->completed == 1;
     }
 
-    public static function formatDate($date_created) {
-        $date = new \DateTime($date_created);
+    public function formatDate() {
+        $date = new \DateTime($this->date_created);
         return $date->format("d/m/Y");
     }
 
@@ -32,7 +32,7 @@ class Issue implements JsonSerializable
                 'title' => $this->title,
                 'summary' => $this->summary,
                 'severity' => $this->severity,
-                'date_created' => $this->formatDate($this->date_created),
+                'date_created' => $this->formatDate(),
                 'comment_count' => $this->comment_count,
                 'completed' => $this->getCompleted()
             ];

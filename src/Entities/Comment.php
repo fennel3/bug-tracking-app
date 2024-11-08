@@ -11,8 +11,8 @@ class Comment implements JsonSerializable
     public string $comment;
     public string $date_created;
 
-    public function formatCommentDate($date_created): string {
-        $date = new DateTime($date_created);
+    public function formatCommentDate(): string {
+        $date = new DateTime($this->date_created);
         return $date->format("d/m/Y H:i");
     }
 
@@ -21,7 +21,7 @@ class Comment implements JsonSerializable
         return [
             'name' => $this->name,
             'comment' => $this->comment,
-            'date_created' => $this->formatCommentDate($this->date_created),
+            'date_created' => $this->formatCommentDate(),
         ];
     }
 }
