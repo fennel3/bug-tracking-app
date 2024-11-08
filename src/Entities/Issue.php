@@ -20,15 +20,19 @@ class Issue implements JsonSerializable
         return $this->completed == 1;
     }
 
+    public static function formatDate($date_created) {
+        $date = new \DateTime($date_created);
+        return $date->format("d/m/Y");
+    }
+
     public function jsonSerialize(): mixed
     {
-
             return [
                 'id' => $this->id,
                 'title' => $this->title,
                 'summary' => $this->summary,
                 'severity' => $this->severity,
-                'date_created' => DateFormatter::formatDate($this->date_created),
+                'date_created' => $this->formatDate($this->date_created),
                 'comment_count' => $this->comment_count,
                 'completed' => $this->getCompleted()
             ];
