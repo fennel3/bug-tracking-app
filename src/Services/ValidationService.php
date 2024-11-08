@@ -13,19 +13,9 @@ class ValidationService
         return !empty($data['reporter']) && !empty($data['title']) && !empty($data['severity']) && !empty($data['department']);
     }
 
-    public static function limitTitleCharacterLength($data): string
-    {
-        return substr($data, 0, 255);
-    }
-
-    public static function limitReporterCharacterLength($data): string
-    {
-        return substr($data, 0, 255);
-    }
-
-    public static function limitDescriptionCharacterLength($data): string
-    {
-        return substr($data, 0, 10000);
+    public static function limitStringLength(string $string, int $limit) {
+        $output = trim($string);
+        return substr($output, 0, $limit);
     }
 
     public static function checkIsInt(int|string $input): int|false
