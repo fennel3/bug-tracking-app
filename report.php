@@ -19,16 +19,20 @@ $requiredExist = ValidationService::checkRequiredDataExists($data);
 
 if (!$requiredExist) {
     http_response_code(400);
-    echo json_encode(["message" => "Invalid issue data"]);
-    return;
+    echo json_encode(["message" => "Invalid data"]);
 }
 
-$data['title'] = ValidationService::validateStringInput($data['title'], 100);
+try {
+    $data['title'] = ValidationService::validateStringInput($data['title'], 100);
 
-$data['name'] = ValidationService::validateStringInput($data['name'], 255);
+    $data['name'] = ValidationService::validateStringInput($data['name'], 255);
 
-if (isset($data['description'])) {
-    $data['description'] = ValidationService::validateStringInput($data['description'], 65535);
+    if (isset($data['description'])) {
+        $data['description'] = ValidationService::validateStringInput($data['description'], 65535);
+    }
+} catch (Exception $e) {
+    http_response_code(400);
+    echo json_encode(["message" => "Invalid description data"]);
 }
 
 $severityIsNumeric = is_numeric($data['severity']);
@@ -37,6 +41,8 @@ if ($severityIsNumeric) {
     $severityExists = ValidationService::checkSeverityExists($db, $data['severity']);
 } else {
     $severityExists = false;
+    http_response_code(400);
+    echo json_encode(["message" => "Invalid severity data"]);
 }
 
 $departmentIsNumeric = is_numeric($data['department']);
@@ -45,6 +51,8 @@ if ($departmentIsNumeric) {
     $departmentExists = ValidationService::checkDepartmentExists($db, $data['department']);
 } else {
     $departmentExists = false;
+    http_response_code(400);
+    echo json_encode(["message" => "Invalid department data"]);
 }
 
 $passedValidation =
@@ -74,3 +82,15 @@ $output = [
     http_response_code(500);
 }
 echo json_encode($output);
+
+
+
+
+
+
+
+
+
+
+
+

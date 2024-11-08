@@ -15,7 +15,7 @@ class ValidationService
     }
 
     public static function validateStringInput(string $input, int $limit): string | false {
-        if ($limit < 1){
+       if ($limit < 1){
             throw new Exception("Limit must be a positive integer");
         }
         $output = trim($input);
