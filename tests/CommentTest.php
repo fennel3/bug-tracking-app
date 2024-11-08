@@ -14,15 +14,13 @@ class CommentTest extends TestCase
         $comment->id = 1;
         $comment->name = "Name";
         $comment->comment = "A comment.";
-        $comment->date_created = "05/11/2024";
+        $comment->date_created = "11/05/2024 00:00";
         $comment->issue_id = 5;
 
         $expected = json_encode([
-            'id' => 1,
-            'title' => "Name",
+            'name' => "Name",
             'comment' => "A comment.",
-            'date_created' => "05/11/2024",
-            'issue_id' => 5
+            'date_created' => "05/11/2024 00:00",
         ]);
 
         $actual = json_encode($comment);
@@ -35,7 +33,7 @@ class CommentTest extends TestCase
     {
         $comment = new Comment();
 
-        $this->expectException(\Entities\TypeError::class);
+        $this->expectException(TypeError::class);
 
         $comment->id = 'not an ID';
         $comment->name = "Name";
